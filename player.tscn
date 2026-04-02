@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://dj30cont5bw4e"]
+
+[ext_resource type="Script" uid="uid://g1edulbo2pdb" path="res://Player.cs" id="1_4flbx"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_4flbx"]
+size = Vector2(10, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
+size = Vector2(10, 20)
+
+[node name="Player" type="CharacterBody2D" unique_id=68965221]
+script = ExtResource("1_4flbx")
+_baseMoveSpeed = 100.0
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1019849917]
+mesh = SubResource("QuadMesh_4flbx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1650341063]
+shape = SubResource("RectangleShape2D_onrkg")
+
+[node name="BodyUpper" type="Sprite2D" parent="." unique_id=933453399]
+z_index = 1
+
+[node name="BodyLower" type="Sprite2D" parent="." unique_id=572857274]
