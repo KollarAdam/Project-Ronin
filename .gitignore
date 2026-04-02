@@ -1,3 +1,10 @@
+.editorconfig
+.gitattributes
+Player.cs.uid
+project.godot
+Project Ronin.sln
+Project Ronin.csproj
+
 # Godot 4+ specific ignores
 .godot/
 /android/
