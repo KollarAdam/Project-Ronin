@@ -10,7 +10,7 @@ size = Vector2(10, 20)
 
 [node name="Player" type="CharacterBody2D" unique_id=68965221]
 script = ExtResource("1_4flbx")
-_baseMoveSpeed = 100.0
+metadata/_edit_group_ = true
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1019849917]
 mesh = SubResource("QuadMesh_4flbx")
