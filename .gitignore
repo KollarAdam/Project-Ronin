@@ -19,6 +19,5 @@ mono_crash.*.json
 editorconfig
 gitattributes
 icon.svg.import
-Project Ronin.csproj
-Project Ronin.sln
+
 

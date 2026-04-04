@@ -4,8 +4,8 @@ using System;
 public partial class Player : CharacterBody2D
 {
 	[ExportGroup("Movement")]
-	[Export] private float _baseMoveSpeed = 10f;
-	[Export] private float _maxMoveSpeed = 20f;
+	[Export] private float _baseMoveSpeed = 100f;
+	[Export] private float _maxMoveSpeed = 200f;
 	[Export] private float _acceleration = 1000f;
 	[Export] private float _airAcceleration = 50f;
 	[Export] private float _airFriction = 1000f;
