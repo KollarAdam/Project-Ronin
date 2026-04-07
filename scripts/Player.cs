@@ -15,21 +15,22 @@ public partial class Player : CharacterBody2D
 	[Export] private float _jumpStrength = 200f;
 	[Export] private int _extraJumps = 1;
 
-	enum States { MOVE, CLIMB };
+	enum States { MOVE, HANG };
+	float wallSlide = 200f;
 	private States state = States.MOVE;
 
 	private int _remainingJumps = 1;
 	private float _coyoteTime = 0f;
+
 	public override void _PhysicsProcess(double delta)
 	{
+		var velocity = Velocity;
+		var inputDirection = Input.GetAxis("move_left", "move_right");
+		var inputJump = Input.IsActionJustPressed("jump");
 		switch (state)
 		{
 			case States.MOVE:
 				_coyoteTime -= (float)delta;
-
-				var velocity = Velocity;
-				var inputDirection = Input.GetAxis("move_left", "move_right");
-				var inputJump = Input.IsActionJustPressed("jump");
 
 				velocity.Y = _ApplyGravity(delta);
 				_ResetJumps();
@@ -54,9 +55,26 @@ public partial class Player : CharacterBody2D
 				MoveAndSlide();
 
 				if (wasOnFloor && !IsOnFloor() && velocity.Y >= 0) _coyoteTime = 0.1f;
+
+				if (_IsWallHanging(inputDirection)) state = States.HANG;
+
 				break;
 
-			case States.CLIMB:
+			case States.HANG:
+				if (_IsWallHanging(inputDirection))
+				{
+					velocity.Y = 0f;
+					velocity.Y += (float)(wallSlide * delta);
+					if(wallSlide <= 2000f) wallSlide *= 1.02f;
+					Velocity = velocity;
+					MoveAndSlide();
+				}
+				else
+				{
+					wallSlide = 200f;
+					state = States.MOVE;	
+				}
+
 				break;
 		}
 	}
@@ -108,5 +126,10 @@ public partial class Player : CharacterBody2D
 	private void _ResetJumps()
 	{
 		if (IsOnFloor()) _remainingJumps = _extraJumps;
+	}
+
+	private bool _IsWallHanging(float input)
+	{
+		return IsOnWallOnly() && (input == -GetWallNormal().X);
 	}
 }
