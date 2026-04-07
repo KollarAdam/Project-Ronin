@@ -14,42 +14,58 @@ public partial class Player : CharacterBody2D
 	[Export] private float _downGravity = 700f;
 	[Export] private float _jumpStrength = 200f;
 	[Export] private int _extraJumps = 1;
-	
+
+	enum States { MOVE, CLIMB };
+	private States state = States.MOVE;
+
 	private int _remainingJumps = 1;
-
-    public override void _PhysicsProcess(double delta)
-    {
-		var velocity = Velocity;
-		var inputDirection = Input.GetAxis("move_left", "move_right");
-		var inputJump = Input.IsActionJustPressed("jump");
-
-		velocity.Y = _ApplyGravity(delta);
-		_ResetJumps();
-
-		if (inputJump)
+	private float _coyoteTime = 0f;
+	public override void _PhysicsProcess(double delta)
+	{
+		switch (state)
 		{
-			velocity.Y = _ApplyJump();
-		}	
+			case States.MOVE:
+				_coyoteTime -= (float)delta;
 
-		if (inputDirection == 0)
-		{
-			velocity.X = _ApplyFriction(delta);
+				var velocity = Velocity;
+				var inputDirection = Input.GetAxis("move_left", "move_right");
+				var inputJump = Input.IsActionJustPressed("jump");
+
+				velocity.Y = _ApplyGravity(delta);
+				_ResetJumps();
+
+				if (inputJump)
+				{
+					velocity.Y = _ApplyJump();
+				}
+				if (inputDirection == 0)
+				{
+					velocity.X = _ApplyFriction(delta);
+				}
+				else
+				{
+					velocity.X = _AccelerateHorizontally(inputDirection, delta);
+				}
+
+				var wasOnFloor = IsOnFloor();
+
+				Velocity = velocity;
+
+				MoveAndSlide();
+
+				if (wasOnFloor && !IsOnFloor() && velocity.Y >= 0) _coyoteTime = 0.1f;
+				break;
+
+			case States.CLIMB:
+				break;
 		}
-		else
-		{
-			velocity.X = _AccelerateHorizontally(inputDirection, delta);
-		}
-
-		Velocity = velocity;
-
-		MoveAndSlide();
-    }
+	}
 
 	private float _AccelerateHorizontally(float horDir, double delta)
 	{
 		var velocity = Velocity;
 		var accelerationAmount = _acceleration;
-		if(!IsOnFloor()) accelerationAmount = _airAcceleration;
+		if (!IsOnFloor()) accelerationAmount = _airAcceleration;
 		velocity.X = Mathf.MoveToward(velocity.X, _maxMoveSpeed * horDir, (float)(accelerationAmount * delta * Math.Abs(horDir)));
 		return velocity.X;
 	}
@@ -58,7 +74,7 @@ public partial class Player : CharacterBody2D
 	{
 		var velocity = Velocity;
 		var frictionAmount = _friction;
-		if(!IsOnFloor()) frictionAmount = _airFriction;
+		if (!IsOnFloor()) frictionAmount = _airFriction;
 		velocity.X = Mathf.MoveToward(velocity.X, 0f, (float)(frictionAmount * delta));
 		return velocity.X;
 	}
@@ -77,11 +93,11 @@ public partial class Player : CharacterBody2D
 	private float _ApplyJump()
 	{
 		var velocity = Velocity;
-		if (IsOnFloor())
+		if (IsOnFloor() || _coyoteTime > 0)
 		{
 			velocity.Y = -_jumpStrength;
 		}
-		if (!IsOnFloor() && _remainingJumps != 0)
+		if (!IsOnFloor() && _coyoteTime <= 0 && _remainingJumps != 0)
 		{
 			velocity.Y = -_jumpStrength;
 			_remainingJumps--;
@@ -91,6 +107,6 @@ public partial class Player : CharacterBody2D
 
 	private void _ResetJumps()
 	{
-		if(IsOnFloor()) _remainingJumps = _extraJumps;
+		if (IsOnFloor()) _remainingJumps = _extraJumps;
 	}
 }
