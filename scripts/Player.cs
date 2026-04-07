@@ -17,6 +17,7 @@ public partial class Player : CharacterBody2D
 
 	enum States { MOVE, HANG };
 	float wallSlide = 200f;
+	float hangGracePeriod = 1f;
 	private States state = States.MOVE;
 
 	private int _remainingJumps = 1;
@@ -33,6 +34,7 @@ public partial class Player : CharacterBody2D
 				_coyoteTime -= (float)delta;
 
 				velocity.Y = _ApplyGravity(delta);
+
 				_ResetJumps();
 
 				if (inputJump)
@@ -54,8 +56,7 @@ public partial class Player : CharacterBody2D
 
 				MoveAndSlide();
 
-				if (wasOnFloor && !IsOnFloor() && velocity.Y >= 0) _coyoteTime = 0.1f;
-
+				if (wasOnFloor && !IsOnFloor() && velocity.Y >= 0 || IsOnWallOnly()) _coyoteTime = 0.1f;
 				if (_IsWallHanging(inputDirection)) state = States.HANG;
 
 				break;
@@ -63,22 +64,27 @@ public partial class Player : CharacterBody2D
 			case States.HANG:
 				if (_IsWallHanging(inputDirection))
 				{
+					hangGracePeriod -= (float)delta;
 					velocity.Y = 0f;
-					velocity.Y += (float)(wallSlide * delta);
-					if(wallSlide <= 2000f) wallSlide *= 1.02f;
+					if(hangGracePeriod <= 0f){ velocity.Y += (float)(wallSlide * delta);
+					if(wallSlide <= 2000f) wallSlide *= 1.02f;};
+					if(inputJump){
+						velocity.Y = _ApplyJump();
+						velocity.X = GetWallNormal().X*_jumpStrength/2;
+						}
 					Velocity = velocity;
 					MoveAndSlide();
 				}
 				else
 				{
 					wallSlide = 200f;
+					hangGracePeriod = 1f;
 					state = States.MOVE;	
 				}
 
 				break;
 		}
 	}
-
 	private float _AccelerateHorizontally(float horDir, double delta)
 	{
 		var velocity = Velocity;
@@ -87,7 +93,6 @@ public partial class Player : CharacterBody2D
 		velocity.X = Mathf.MoveToward(velocity.X, _maxMoveSpeed * horDir, (float)(accelerationAmount * delta * Math.Abs(horDir)));
 		return velocity.X;
 	}
-
 	private float _ApplyFriction(double delta)
 	{
 		var velocity = Velocity;
@@ -96,7 +101,6 @@ public partial class Player : CharacterBody2D
 		velocity.X = Mathf.MoveToward(velocity.X, 0f, (float)(frictionAmount * delta));
 		return velocity.X;
 	}
-
 	private float _ApplyGravity(double delta)
 	{
 		var velocity = Velocity;
@@ -107,11 +111,10 @@ public partial class Player : CharacterBody2D
 		}
 		return velocity.Y;
 	}
-
 	private float _ApplyJump()
 	{
 		var velocity = Velocity;
-		if (IsOnFloor() || _coyoteTime > 0)
+		if (IsOnFloor() || _coyoteTime > 0 || IsOnWallOnly())
 		{
 			velocity.Y = -_jumpStrength;
 		}
@@ -122,14 +125,6 @@ public partial class Player : CharacterBody2D
 		}
 		return velocity.Y;
 	}
-
-	private void _ResetJumps()
-	{
-		if (IsOnFloor()) _remainingJumps = _extraJumps;
-	}
-
-	private bool _IsWallHanging(float input)
-	{
-		return IsOnWallOnly() && (input == -GetWallNormal().X);
-	}
+	private void _ResetJumps(){ if (IsOnFloor()){_remainingJumps = _extraJumps; GD.Print("Double jump reset!");}}
+	private bool _IsWallHanging(float input){ return IsOnWallOnly() && (input == -GetWallNormal().X);}
 }
