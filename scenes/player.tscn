@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://g1edulbo2pdb" path="res://scripts/Player.cs" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://cbkwrxx4gb2m4" path="res://scripts/Hitbox.cs" id="2_g2els"]
+[ext_resource type="Script" uid="uid://bqknyet8sxjpg" path="res://resources/Stats.cs" id="2_qhqgy"]
+
+[sub_resource type="Resource" id="Resource_dqkch"]
+script = ExtResource("2_qhqgy")
+metadata/_custom_type_script = "uid://bqknyet8sxjpg"
 
 [sub_resource type="QuadMesh" id="QuadMesh_4flbx"]
 size = Vector2(10, 20)
@@ -14,6 +19,7 @@ script = ExtResource("1_4flbx")
 _acceleration = 10000.0
 _friction = 10000.0
 _downGravity = 1000.0
+stats = SubResource("Resource_dqkch")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1019849917]
 mesh = SubResource("QuadMesh_4flbx")

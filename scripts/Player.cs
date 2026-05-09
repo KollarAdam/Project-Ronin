@@ -15,10 +15,13 @@ public partial class Player : CharacterBody2D
 	[Export] private float _jumpStrength = 200f;
 	[Export] private int _extraJumps = 1;
 
+	[ExportGroup("Stats")]
+	[Export] Stats stats;
+
 	enum States { MOVE, HANG };
+	private States state = States.MOVE;
 	float wallSlide = 200f;
 	float hangGracePeriod = 1f;
-	private States state = States.MOVE;
 
 	private int _remainingJumps = 1;
 	private float _coyoteTime = 0f;

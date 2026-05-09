@@ -12,7 +12,7 @@ public partial class Hurtbox : Area2D
 	private void _OnAreaEntered(Area2D area)
 	{
         Hitbox hitbox = area as Hitbox;
-        GD.Print($"You hit me, ouch! I took {hitbox.damage} damage");
+        EmitSignal("AreaEntered", hitbox);
 	}
 
 
