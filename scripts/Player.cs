@@ -125,6 +125,6 @@ public partial class Player : CharacterBody2D
 		}
 		return velocity.Y;
 	}
-	private void _ResetJumps(){ if (IsOnFloor()){_remainingJumps = _extraJumps; GD.Print("Double jump reset!");}}
+	private void _ResetJumps(){ if (IsOnFloor()){_remainingJumps = _extraJumps;}}
 	private bool _IsWallHanging(float input){ return IsOnWallOnly() && (input == -GetWallNormal().X);}
 }

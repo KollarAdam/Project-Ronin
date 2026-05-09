@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bkteq6vvcknm7"]
+
+[ext_resource type="Script" uid="uid://b7pb3mvskux4y" path="res://scripts/Enemy1.cs" id="1_nb0t0"]
+[ext_resource type="Script" uid="uid://db8x5uymgk2hw" path="res://scripts/Hurtbox.cs" id="2_nb0t0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lowyn"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_nb0t0"]
+
+[node name="Node2D" type="Node2D" unique_id=6245860]
+script = ExtResource("1_nb0t0")
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1256900497]
+script = ExtResource("2_nb0t0")
+metadata/_custom_type_script = "uid://db8x5uymgk2hw"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=145589878]
+shape = SubResource("RectangleShape2D_lowyn")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1632891153]
+modulate = Color(0.90014493, 0.22815529, 0.18379408, 1)
+scale = Vector2(20, 20)
+mesh = SubResource("QuadMesh_nb0t0")
