@@ -4,19 +4,8 @@ using System;
 public partial class Player : CharacterBody2D
 {
 	[ExportGroup("Movement")]
-	[Export] private float _baseMoveSpeed = 100f;
-	[Export] private float _maxMoveSpeed = 200f;
-	[Export] private float _acceleration = 2000f;
-	[Export] private float _airAcceleration = 1000f;
-	[Export] private float _airFriction = 700f;
-	[Export] private float _friction = 2000f;
-	[Export] private float _upGravity = 500f;
-	[Export] private float _downGravity = 700f;
-	[Export] private float _jumpStrength = 200f;
-	[Export] private int _extraJumps = 1;
-
-	[ExportGroup("Stats")]
-	[Export] Stats stats;
+	[Export] private HorizontalMovementComponent _horizontalMovement;
+	[Export] private VerticalMovementComponent _verticalMovement;
 
 	enum States { MOVE, HANG };
 	private States state = States.MOVE;
@@ -28,6 +17,11 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
+        _horizontalMovement.VelocityX = Velocity.X;
+		_horizontalMovement.IsOnFloor = IsOnFloor();
+		_verticalMovement.VelocityY = Velocity.Y;
+		_verticalMovement.IsOnFloor = IsOnFloor();
+		_verticalMovement.IsOnWallOnly = IsOnWallOnly();
 		var velocity = Velocity;
 		var inputDirection = Input.GetAxis("move_left", "move_right");
 		var inputJump = Input.IsActionJustPressed("jump");
@@ -35,22 +29,23 @@ public partial class Player : CharacterBody2D
 		{
 			case States.MOVE:
 				_coyoteTime -= (float)delta;
+				_verticalMovement.CoyoteTime = _coyoteTime;
 
-				velocity.Y = _ApplyGravity(delta);
+				velocity.Y = _verticalMovement.ApplyGravity(delta);
 
-				_ResetJumps();
+				_verticalMovement.ResetJumps();
 
 				if (inputJump)
 				{
-					velocity.Y = _ApplyJump();
+					velocity.Y = _verticalMovement.ApplyJump();
 				}
 				if (inputDirection == 0)
 				{
-					velocity.X = _ApplyFriction(delta);
+					velocity.X = _horizontalMovement.ApplyFriction(delta);
 				}
 				else
 				{
-					velocity.X = _AccelerateHorizontally(inputDirection, delta);
+					velocity.X = _horizontalMovement.AccelerateHorizontally(inputDirection, delta);
 				}
 
 				var wasOnFloor = IsOnFloor();
@@ -59,9 +54,9 @@ public partial class Player : CharacterBody2D
 
 				MoveAndSlide();
 
-				if (wasOnFloor && !IsOnFloor() && velocity.Y >= 0 || IsOnWallOnly()) _coyoteTime = 0.1f;
+				if (wasOnFloor && !IsOnFloor() && velocity.Y >= 0) _coyoteTime = 0.1f;
 				if (_IsWallHanging(inputDirection)) state = States.HANG;
-
+				GD.Print($"Player's coyote time {_coyoteTime}\n vertmovement coyote time {_verticalMovement.CoyoteTime}");
 				break;
 
 			case States.HANG:
@@ -72,8 +67,8 @@ public partial class Player : CharacterBody2D
 					if(hangGracePeriod <= 0f){ velocity.Y += (float)(wallSlide * delta);
 					if(wallSlide <= 2000f) wallSlide *= 1.02f;};
 					if(inputJump){
-						velocity.Y = _ApplyJump();
-						velocity.X = GetWallNormal().X*_jumpStrength/2;
+						velocity.Y = _verticalMovement.ApplyJump();
+						velocity.X = GetWallNormal().X*_verticalMovement.JumpStrength/2;
 						}
 					Velocity = velocity;
 					MoveAndSlide();
@@ -88,46 +83,6 @@ public partial class Player : CharacterBody2D
 				break;
 		}
 	}
-	private float _AccelerateHorizontally(float horDir, double delta)
-	{
-		var velocity = Velocity;
-		var accelerationAmount = _acceleration;
-		if (!IsOnFloor()) accelerationAmount = _airAcceleration;
-		velocity.X = Mathf.MoveToward(velocity.X, _maxMoveSpeed * horDir, (float)(accelerationAmount * delta * Math.Abs(horDir)));
-		return velocity.X;
-	}
-	private float _ApplyFriction(double delta)
-	{
-		var velocity = Velocity;
-		var frictionAmount = _friction;
-		if (!IsOnFloor()) frictionAmount = _airFriction;
-		velocity.X = Mathf.MoveToward(velocity.X, 0f, (float)(frictionAmount * delta));
-		return velocity.X;
-	}
-	private float _ApplyGravity(double delta)
-	{
-		var velocity = Velocity;
-		if (!IsOnFloor())
-		{
-			if (velocity.Y <= 0) velocity.Y += (float)(_upGravity * delta);
-			else velocity.Y += (float)(_downGravity * delta);
-		}
-		return velocity.Y;
-	}
-	private float _ApplyJump()
-	{
-		var velocity = Velocity;
-		if (IsOnFloor() || _coyoteTime > 0 || IsOnWallOnly())
-		{
-			velocity.Y = -_jumpStrength;
-		}
-		if (!IsOnFloor() && _coyoteTime <= 0 && _remainingJumps != 0)
-		{
-			velocity.Y = -_jumpStrength;
-			_remainingJumps--;
-		}
-		return velocity.Y;
-	}
-	private void _ResetJumps(){ if (IsOnFloor()){_remainingJumps = _extraJumps;}}
 	private bool _IsWallHanging(float input){ return IsOnWallOnly() && (input == -GetWallNormal().X);}
+
 }

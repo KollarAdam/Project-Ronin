@@ -18,7 +18,7 @@ public partial class Enemy1 : Node2D
 
 	}
 
-	public void _TakeDamage()
+	public void OnDamageTaken()
 	{
 
 		GD.Print("I got hit, ouch.");

@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://bkteq6vvcknm7"]
 
 [ext_resource type="Script" uid="uid://b7pb3mvskux4y" path="res://scripts/Enemy1.cs" id="1_nb0t0"]
+[ext_resource type="Script" uid="uid://bqknyet8sxjpg" path="res://scripts/Stats.cs" id="2_n665k"]
 [ext_resource type="Script" uid="uid://db8x5uymgk2hw" path="res://scripts/Hurtbox.cs" id="2_nb0t0"]
+
+[sub_resource type="Resource" id="Resource_n665k"]
+script = ExtResource("2_n665k")
+metadata/_custom_type_script = "uid://bqknyet8sxjpg"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lowyn"]
 
@@ -9,6 +14,7 @@
 
 [node name="Node2D" type="Node2D" unique_id=6245860]
 script = ExtResource("1_nb0t0")
+stats = SubResource("Resource_n665k")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1256900497]
 script = ExtResource("2_nb0t0")
