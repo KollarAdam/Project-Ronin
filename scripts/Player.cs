@@ -3,9 +3,9 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	[ExportGroup("Movement")]
-	[Export] private HorizontalMovementComponent _horizontalMovement;
-	[Export] private VerticalMovementComponent _verticalMovement;
+	[ExportGroup("Components")]
+	[Export] private InputComponent _input;
+	[Export] private MovementComponent _movement;
 
 	enum States { MOVE, HANG };
 	private States state = States.MOVE;
@@ -17,35 +17,34 @@ public partial class Player : CharacterBody2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-        _horizontalMovement.VelocityX = Velocity.X;
-		_horizontalMovement.IsOnFloor = IsOnFloor();
-		_verticalMovement.VelocityY = Velocity.Y;
-		_verticalMovement.IsOnFloor = IsOnFloor();
-		_verticalMovement.IsOnWallOnly = IsOnWallOnly();
+		_input.Update();
+        _movement.VelocityX = Velocity.X;
+		_movement.IsOnFloor = IsOnFloor();
+		_movement.VelocityY = Velocity.Y;
+		_movement.IsOnFloor = IsOnFloor();
+		_movement.IsOnWallOnly = IsOnWallOnly();
 		var velocity = Velocity;
-		var inputDirection = Input.GetAxis("move_left", "move_right");
-		var inputJump = Input.IsActionJustPressed("jump");
 		switch (state)
 		{
 			case States.MOVE:
 				_coyoteTime -= (float)delta;
-				_verticalMovement.CoyoteTime = _coyoteTime;
+				_movement.CoyoteTime = _coyoteTime;
 
-				velocity.Y = _verticalMovement.ApplyGravity(delta);
+				velocity.Y = _movement.ApplyGravity(delta);
 
-				_verticalMovement.ResetJumps();
+				_movement.ResetJumps();
 
-				if (inputJump)
+				if (_input.Jump)
 				{
-					velocity.Y = _verticalMovement.ApplyJump();
+					velocity.Y = _movement.ApplyJump();
 				}
-				if (inputDirection == 0)
+				if (_input.Direction == 0)
 				{
-					velocity.X = _horizontalMovement.ApplyFriction(delta);
+					velocity.X = _movement.ApplyFriction(delta);
 				}
 				else
 				{
-					velocity.X = _horizontalMovement.AccelerateHorizontally(inputDirection, delta);
+					velocity.X = _movement.AccelerateHorizontally(_input.Direction, delta);
 				}
 
 				var wasOnFloor = IsOnFloor();
@@ -55,20 +54,20 @@ public partial class Player : CharacterBody2D
 				MoveAndSlide();
 
 				if (wasOnFloor && !IsOnFloor() && velocity.Y >= 0) _coyoteTime = 0.1f;
-				if (_IsWallHanging(inputDirection)) state = States.HANG;
-				GD.Print($"Player's coyote time {_coyoteTime}\n vertmovement coyote time {_verticalMovement.CoyoteTime}");
+				if (_IsWallHanging(_input.Direction)) state = States.HANG;
+				GD.Print($"Player's coyote time {_coyoteTime}\n vertmovement coyote time {_movement.CoyoteTime}");
 				break;
 
 			case States.HANG:
-				if (_IsWallHanging(inputDirection))
+				if (_IsWallHanging(_input.Direction))
 				{
 					hangGracePeriod -= (float)delta;
 					velocity.Y = 0f;
 					if(hangGracePeriod <= 0f){ velocity.Y += (float)(wallSlide * delta);
 					if(wallSlide <= 2000f) wallSlide *= 1.02f;};
-					if(inputJump){
-						velocity.Y = _verticalMovement.ApplyJump();
-						velocity.X = GetWallNormal().X*_verticalMovement.JumpStrength/2;
+					if(_input.Jump){
+						velocity.Y = _movement.ApplyJump();
+						velocity.X = GetWallNormal().X*_movement.JumpStrength/2;
 						}
 					Velocity = velocity;
 					MoveAndSlide();

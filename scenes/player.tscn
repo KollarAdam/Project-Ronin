@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://g1edulbo2pdb" path="res://scripts/Player.cs" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://cbkwrxx4gb2m4" path="res://scripts/Hitbox.cs" id="2_g2els"]
-[ext_resource type="Script" uid="uid://crvc04pu0kefe" path="res://scripts/HorizontalMovementComponent.cs" id="3_dqkch"]
-[ext_resource type="Script" uid="uid://j3gekjgkxlt5" path="res://scripts/VerticalMovementComponent.cs" id="4_qlg0r"]
+[ext_resource type="Script" uid="uid://crvc04pu0kefe" path="res://scripts/MovementComponent.cs" id="3_dqkch"]
+[ext_resource type="Script" uid="uid://cktk87wifhnik" path="res://scripts/InputComponent.cs" id="4_dqkch"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_4flbx"]
 size = Vector2(10, 20)
@@ -11,10 +11,10 @@ size = Vector2(10, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(10, 20)
 
-[node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("_horizontalMovement", "_verticalMovement")]
+[node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("_input", "_movement")]
 script = ExtResource("1_4flbx")
-_horizontalMovement = NodePath("HorizontalMovementComponent")
-_verticalMovement = NodePath("VerticalMovementComponent")
+_input = NodePath("InputComponent")
+_movement = NodePath("MovementComponent")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1019849917]
 mesh = SubResource("QuadMesh_4flbx")
@@ -27,25 +27,25 @@ z_index = 1
 
 [node name="BodyLower" type="Sprite2D" parent="." unique_id=572857274]
 
-[node name="Node2D" type="Node2D" parent="." unique_id=397892319]
+[node name="Attack" type="Node2D" parent="." unique_id=397892319]
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D" unique_id=1604477872]
+[node name="Sprite2D" type="Sprite2D" parent="Attack" unique_id=1604477872]
 
-[node name="Hitbox" type="Area2D" parent="Node2D/Sprite2D" unique_id=194037134]
+[node name="Hitbox" type="Area2D" parent="Attack/Sprite2D" unique_id=194037134]
 monitoring = false
 script = ExtResource("2_g2els")
 metadata/_custom_type_script = "uid://cbkwrxx4gb2m4"
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D/Sprite2D/Hitbox" unique_id=1360889770]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack/Sprite2D/Hitbox" unique_id=1360889770]
 position = Vector2(-9, 0)
 polygon = PackedVector2Array(36, -16, 36, 16, 0, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Node2D" unique_id=518721773]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Attack" unique_id=518721773]
 
-[node name="VerticalMovementComponent" type="Node" parent="." unique_id=1436371370]
-script = ExtResource("4_qlg0r")
-metadata/_custom_type_script = "uid://j3gekjgkxlt5"
-
-[node name="HorizontalMovementComponent" type="Node" parent="." unique_id=1702656563]
+[node name="MovementComponent" type="Node" parent="." unique_id=1633060614]
 script = ExtResource("3_dqkch")
 metadata/_custom_type_script = "uid://crvc04pu0kefe"
+
+[node name="InputComponent" type="Node" parent="." unique_id=456736668]
+script = ExtResource("4_dqkch")
+metadata/_custom_type_script = "uid://cktk87wifhnik"
