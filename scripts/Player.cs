@@ -14,7 +14,15 @@ public partial class Player : CharacterBody2D
 
 	private int _remainingJumps = 1;
 	private float _coyoteTime = 0f;
-
+	private Node2D _anchor;
+	public AnimationPlayer upperBody;
+	public AnimationPlayer lowerBody;
+    public override void _Ready()
+    {
+		_anchor = GetNode<Node2D>("Anchor");
+        upperBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerUpper");
+        lowerBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerLower");
+    }
 	public override void _PhysicsProcess(double delta)
 	{
 		_input.Update();
@@ -24,6 +32,7 @@ public partial class Player : CharacterBody2D
 		_movement.IsOnFloor = IsOnFloor();
 		_movement.IsOnWallOnly = IsOnWallOnly();
 		var velocity = Velocity;
+		var anchorScale = _anchor.Scale;
 		switch (state)
 		{
 			case States.MOVE:
@@ -41,21 +50,27 @@ public partial class Player : CharacterBody2D
 				if (_input.Direction == 0)
 				{
 					velocity.X = _movement.ApplyFriction(delta);
+					upperBody.Play("Idle");
+					lowerBody.Play("Idle");
 				}
 				else
 				{
+					anchorScale.X = Math.Sign(_input.Direction);
 					velocity.X = _movement.AccelerateHorizontally(_input.Direction, delta);
+					upperBody.Play("Run");
+					lowerBody.Play("Run");
+					GD.Print(anchorScale.X);
 				}
 
 				var wasOnFloor = IsOnFloor();
 
+				_anchor.Scale = anchorScale;
 				Velocity = velocity;
 
 				MoveAndSlide();
 
 				if (wasOnFloor && !IsOnFloor() && velocity.Y >= 0) _coyoteTime = 0.1f;
 				if (_IsWallHanging(_input.Direction)) state = States.HANG;
-				GD.Print($"Player's coyote time {_coyoteTime}\n vertmovement coyote time {_movement.CoyoteTime}");
 				break;
 
 			case States.HANG:

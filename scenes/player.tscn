@@ -1,49 +1,170 @@
 [gd_scene format=3 uid="uid://dj30cont5bw4e"]
 
 [ext_resource type="Script" uid="uid://g1edulbo2pdb" path="res://scripts/Player.cs" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://cbkwrxx4gb2m4" path="res://scripts/Hitbox.cs" id="2_g2els"]
+[ext_resource type="Texture2D" uid="uid://dcdky6lg52gvy" path="res://assets/RoninTest.png" id="2_qlg0r"]
 [ext_resource type="Script" uid="uid://crvc04pu0kefe" path="res://scripts/MovementComponent.cs" id="3_dqkch"]
+[ext_resource type="PackedScene" uid="uid://dp1oiovk0cg0y" path="res://scenes/attack.tscn" id="3_qlg0r"]
 [ext_resource type="Script" uid="uid://cktk87wifhnik" path="res://scripts/InputComponent.cs" id="4_dqkch"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_4flbx"]
-size = Vector2(10, 20)
+[sub_resource type="Animation" id="Animation_fjrip"]
+resource_name = "Idle"
+length = 0.083333336
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/BodyUpper:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [19]
+}
+
+[sub_resource type="Animation" id="Animation_qlg0r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/BodyUpper:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_tuyoq"]
+resource_name = "Run"
+length = 0.75
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/BodyUpper:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.41666666, 0.5, 0.5833333, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14, 15, 16, 17, 18]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fjrip"]
+_data = {
+&"Idle": SubResource("Animation_fjrip"),
+&"RESET": SubResource("Animation_qlg0r"),
+&"Run": SubResource("Animation_tuyoq")
+}
+
+[sub_resource type="Animation" id="Animation_y4r1p"]
+resource_name = "Idle"
+length = 0.083333336
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/BodyLower:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+
+[sub_resource type="Animation" id="Animation_smehm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/BodyLower:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ur7pv"]
+resource_name = "Run"
+length = 0.75
+loop_mode = 1
+step = 0.083333336
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/BodyLower:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.083333336, 0.16666667, 0.25, 0.33333334, 0.4166667, 0.5, 0.5833334, 0.6666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y4r1p"]
+_data = {
+&"Idle": SubResource("Animation_y4r1p"),
+&"RESET": SubResource("Animation_smehm"),
+&"Run": SubResource("Animation_ur7pv")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
-size = Vector2(10, 20)
+size = Vector2(14, 39.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("_input", "_movement")]
 script = ExtResource("1_4flbx")
 _input = NodePath("InputComponent")
 _movement = NodePath("MovementComponent")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1019849917]
-mesh = SubResource("QuadMesh_4flbx")
+[node name="Anchor" type="Node2D" parent="." unique_id=1381458752]
+
+[node name="BodyUpper" type="Sprite2D" parent="Anchor" unique_id=933453399]
+z_index = 1
+texture = ExtResource("2_qlg0r")
+offset = Vector2(-2, -2)
+hframes = 10
+vframes = 2
+frame = 10
+
+[node name="BodyLower" type="Sprite2D" parent="Anchor" unique_id=572857274]
+texture = ExtResource("2_qlg0r")
+offset = Vector2(-2, -2)
+hframes = 10
+vframes = 2
+
+[node name="AnimationPlayerUpper" type="AnimationPlayer" parent="Anchor" unique_id=518721773]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_fjrip")
+
+[node name="AnimationPlayerLower" type="AnimationPlayer" parent="Anchor" unique_id=134437327]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_y4r1p")
+
+[node name="Attack" parent="Anchor" unique_id=1469314117 node_paths=PackedStringArray("_attack") instance=ExtResource("3_qlg0r")]
+position = Vector2(5, 0)
+_attack = NodePath("../../InputComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1650341063]
+visible = false
+position = Vector2(4, 0.25)
 shape = SubResource("RectangleShape2D_onrkg")
-
-[node name="BodyUpper" type="Sprite2D" parent="." unique_id=933453399]
-z_index = 1
-
-[node name="BodyLower" type="Sprite2D" parent="." unique_id=572857274]
-
-[node name="Attack" type="Node2D" parent="." unique_id=397892319]
-
-[node name="Sprite2D" type="Sprite2D" parent="Attack" unique_id=1604477872]
-
-[node name="Hitbox" type="Area2D" parent="Attack/Sprite2D" unique_id=194037134]
-monitoring = false
-script = ExtResource("2_g2els")
-metadata/_custom_type_script = "uid://cbkwrxx4gb2m4"
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Attack/Sprite2D/Hitbox" unique_id=1360889770]
-position = Vector2(-9, 0)
-polygon = PackedVector2Array(36, -16, 36, 16, 0, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Attack" unique_id=518721773]
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1633060614]
 script = ExtResource("3_dqkch")
+_upGravity = 600.0
+_downGravity = 1100.0
 metadata/_custom_type_script = "uid://crvc04pu0kefe"
 
 [node name="InputComponent" type="Node" parent="." unique_id=456736668]
