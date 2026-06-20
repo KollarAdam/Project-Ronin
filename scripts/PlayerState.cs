@@ -1,13 +1,20 @@
 using Godot;
 using System;
 [GlobalClass]
-public partial class State : Node
+public partial class PlayerState : Node
 {
-    public void Enter()
+	public Player player;
+	public Action<PlayerState,string> StateChanged;
+    public override void _Ready()
+    {
+        player = GetOwner<Player>();
+    }
+
+    public virtual void Enter()
 	{
 		
 	}
-	public void Exit()
+	public virtual void Exit()
 	{
 		
 	}

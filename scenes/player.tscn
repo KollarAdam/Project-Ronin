@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://crvc04pu0kefe" path="res://scripts/MovementComponent.cs" id="3_dqkch"]
 [ext_resource type="PackedScene" uid="uid://dp1oiovk0cg0y" path="res://scenes/attack.tscn" id="3_qlg0r"]
 [ext_resource type="Script" uid="uid://cktk87wifhnik" path="res://scripts/InputComponent.cs" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://bikqoxvuev3b3" path="res://scripts/StateMachine.cs" id="6_fjrip"]
+[ext_resource type="Script" path="res://scenes/Idle.cs" id="7_smehm"]
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "Idle"
@@ -171,3 +173,11 @@ metadata/_custom_type_script = "uid://crvc04pu0kefe"
 [node name="InputComponent" type="Node" parent="." unique_id=456736668]
 script = ExtResource("4_dqkch")
 metadata/_custom_type_script = "uid://cktk87wifhnik"
+
+[node name="StateMachine" type="Node" parent="." unique_id=2106516997]
+script = ExtResource("6_fjrip")
+metadata/_custom_type_script = "uid://bikqoxvuev3b3"
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=655463020]
+script = ExtResource("7_smehm")
+metadata/_custom_type_script = "uid://bdxq81t10fk3b"

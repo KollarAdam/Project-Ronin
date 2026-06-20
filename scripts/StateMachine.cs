@@ -5,18 +5,24 @@ using System.Linq;
 [GlobalClass]
 public partial class StateMachine : Node
 {
-	[Export] private State initialState;
-	private State currentState;
-	private Dictionary<string, State> states = new Dictionary<string, State>();
+	[Export] private PlayerState initialState;
+	private PlayerState currentState;
+	private Dictionary<string, PlayerState> states = new Dictionary<string, PlayerState>();
 
     public override void _Ready()
     {
-        foreach(State child in GetChildren().Cast<State>())
+        foreach(PlayerState child in GetChildren().Cast<PlayerState>())
 		{
-			if(child is State)
+			if(child is PlayerState)
 			{
 				states[child.Name.ToString().ToUpper()] = child;
+				child.StateChanged += OnStateChange;
 			}
+		}
+		if (initialState is PlayerState)
+		{
+			initialState.Enter();
+			currentState = initialState;
 		}
     }
 	public override void _Process(double delta)
@@ -27,5 +33,19 @@ public partial class StateMachine : Node
     {
         currentState?._PhysicsProcess(delta);
     }
+
+	public void OnStateChange(PlayerState state,string newStateName)
+	{
+		if(state != currentState) return;
+
+		PlayerState newState = states[newStateName.ToUpper()];
+
+		if(newState is null) return;
+
+		currentState?.Exit();
+
+		newState.Enter();
+		currentState = newState;
+	}
 
 }
