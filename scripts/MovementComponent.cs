@@ -14,12 +14,12 @@ public partial class MovementComponent : Node
 	[Export] private int _extraJumps = 1;
 
 	private int _remainingJumps = 1;
+	public float VelocityX {get; set;}
 	public float VelocityY {get; set;}
 	public bool IsOnWallOnly{get; set;}
 	public bool IsOnFloor {get; set;}
 	public float JumpStrength{ get{return _jumpStrength;} private set{_jumpStrength = value;}}
 	public float CoyoteTime {get; set;}
-	public float VelocityX {get; set;}
 
 	public float AccelerateHorizontally(float horDir, double delta)
 	{

@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cbkwrxx4gb2m4" path="res://scripts/Hitbox.cs" id="1_nursx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6fs0s"]
-size = Vector2(54.5, 26)
+size = Vector2(54, 27)
 
 [sub_resource type="Animation" id="Animation_d2wvv"]
 resource_name = "Attack"
@@ -68,12 +68,12 @@ texture = ExtResource("1_jy1op")
 hframes = 4
 
 [node name="Hitbox" type="Area2D" parent="Sprite2D" unique_id=239305249]
-visible = false
 monitoring = false
 script = ExtResource("1_nursx")
 metadata/_custom_type_script = "uid://cbkwrxx4gb2m4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Hitbox" unique_id=517145041]
+visible = false
 position = Vector2(-3.75, 4)
 shape = SubResource("RectangleShape2D_6fs0s")
 debug_color = Color(0.73469293, 0.4456274, 0.41716522, 0.41960785)
