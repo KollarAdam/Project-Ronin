@@ -76,6 +76,7 @@ metadata/_custom_type_script = "uid://cbkwrxx4gb2m4"
 visible = false
 position = Vector2(-3.75, 4)
 shape = SubResource("RectangleShape2D_6fs0s")
+disabled = true
 debug_color = Color(0.73469293, 0.4456274, 0.41716522, 0.41960785)
 
 [node name="AnimationPlayerSwing" type="AnimationPlayer" parent="." unique_id=151732934]

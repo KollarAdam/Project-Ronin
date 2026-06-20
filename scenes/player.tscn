@@ -132,6 +132,7 @@ _movement = NodePath("MovementComponent")
 
 [node name="BodyUpper" type="Sprite2D" parent="Anchor" unique_id=933453399]
 z_index = 1
+position = Vector2(-6, 0)
 texture = ExtResource("2_qlg0r")
 offset = Vector2(-2, -2)
 hframes = 10
@@ -139,6 +140,7 @@ vframes = 2
 frame = 10
 
 [node name="BodyLower" type="Sprite2D" parent="Anchor" unique_id=572857274]
+position = Vector2(-6, 0)
 texture = ExtResource("2_qlg0r")
 offset = Vector2(-2, -2)
 hframes = 10
@@ -157,8 +159,7 @@ position = Vector2(5, 0)
 _input = NodePath("../../InputComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1650341063]
-visible = false
-position = Vector2(4, 0.25)
+position = Vector2(0, 0.25)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1633060614]

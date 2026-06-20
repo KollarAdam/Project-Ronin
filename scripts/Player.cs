@@ -59,7 +59,6 @@ public partial class Player : CharacterBody2D
 					velocity.X = _movement.AccelerateHorizontally(_input.Direction, delta);
 					upperBody.Play("Run");
 					lowerBody.Play("Run");
-					GD.Print(anchorScale.X);
 				}
 
 				var wasOnFloor = IsOnFloor();
