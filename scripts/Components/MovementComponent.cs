@@ -14,53 +14,45 @@ public partial class MovementComponent : Node
 	[Export] private int _extraJumps = 1;
 
 	private int _remainingJumps = 1;
-	public float VelocityX {get; set;}
-	public float VelocityY {get; set;}
-	public bool IsOnWallOnly{get; set;}
-	public bool IsOnFloor {get; set;}
 	public float JumpStrength{ get{return _jumpStrength;} private set{_jumpStrength = value;}}
 	public float CoyoteTime {get; set;}
 
-	public float AccelerateHorizontally(float horDir, double delta)
+	public float AccelerateHorizontally(float horDir, float velocityX, double delta, bool isOnFloor)
 	{
-		var velocityX = VelocityX;
 		var accelerationAmount = _acceleration;
-		if (!IsOnFloor) accelerationAmount = _airAcceleration;
+		if (!isOnFloor) accelerationAmount = _airAcceleration;
 		velocityX = Mathf.MoveToward(velocityX, _maxMoveSpeed * horDir, (float)(accelerationAmount * delta * Math.Abs(horDir)));
 		return velocityX;
 	}
-	public float ApplyFriction(double delta)
+	public float ApplyFriction(float velocityX, double delta, bool isOnFloor)
 	{
-		var velocityX = VelocityX;
 		var frictionAmount = _friction;
-		if (!IsOnFloor) frictionAmount = _airFriction;
+		if (!isOnFloor) frictionAmount = _airFriction;
 		velocityX = Mathf.MoveToward(velocityX, 0f, (float)(frictionAmount * delta));
 		return velocityX;
 	}
-	public float ApplyGravity(double delta)
+	public float ApplyGravity(float velocityY, double delta, bool isOnFloor)
 	{
-		var velocityY = VelocityY;
-		if (!IsOnFloor)
+		if (!isOnFloor)
 		{
 			if (velocityY <= 0) velocityY += (float)(_upGravity * delta);
 			else velocityY += (float)(_downGravity * delta);
 		}
 		return velocityY;
 	}
-	public float ApplyJump()
+	public float ApplyJump(float velocityY, bool isOnFloor, bool isOnWallOnly)
 	{
-		var velocityY = VelocityY;
-		if (IsOnFloor || CoyoteTime > 0 || IsOnWallOnly)
+		if (isOnFloor || CoyoteTime > 0 || isOnWallOnly)
 		{
 			velocityY = -_jumpStrength;
 		}
-		if (!IsOnFloor && CoyoteTime <= 0 && _remainingJumps != 0)
+		if (!isOnFloor && CoyoteTime <= 0 && _remainingJumps != 0)
 		{
 			velocityY = -_jumpStrength;
 			_remainingJumps--;
 		}
 		return velocityY;
 	}
-	public void ResetJumps(){ if (IsOnFloor){_remainingJumps = _extraJumps;}}
+	public void ResetJumps(bool isOnFloor){ if (isOnFloor){_remainingJumps = _extraJumps;}}
 
 }

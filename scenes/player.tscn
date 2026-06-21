@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://dp1oiovk0cg0y" path="res://scenes/attack.tscn" id="3_qlg0r"]
 [ext_resource type="Script" uid="uid://cktk87wifhnik" path="res://scripts/Components/InputComponent.cs" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://bikqoxvuev3b3" path="res://scripts/States/StateMachine.cs" id="6_fjrip"]
+[ext_resource type="Script" uid="uid://dmqy61s55dyje" path="res://scripts/States/PlayerMove.cs" id="8_smehm"]
+[ext_resource type="Script" uid="uid://c0chpu2marego" path="res://scripts/States/PlayerWallhang.cs" id="8_ur7pv"]
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "Idle"
@@ -124,10 +126,10 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(14, 39.5)
 
-[node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("_input", "_movement")]
+[node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("input", "movement")]
 script = ExtResource("1_4flbx")
-_input = NodePath("InputComponent")
-_movement = NodePath("MovementComponent")
+input = NodePath("InputComponent")
+movement = NodePath("MovementComponent")
 
 [node name="Anchor" type="Node2D" parent="." unique_id=1381458752]
 
@@ -165,14 +167,24 @@ shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1633060614]
 script = ExtResource("3_dqkch")
-_upGravity = 600.0
-_downGravity = 1100.0
+_upGravity = 520.0
+_downGravity = 800.0
+_jumpStrength = 260.0
 metadata/_custom_type_script = "uid://crvc04pu0kefe"
 
 [node name="InputComponent" type="Node" parent="." unique_id=456736668]
 script = ExtResource("4_dqkch")
 metadata/_custom_type_script = "uid://cktk87wifhnik"
 
-[node name="StateMachine" type="Node" parent="." unique_id=2106516997]
+[node name="StateMachine" type="Node" parent="." unique_id=2106516997 node_paths=PackedStringArray("initialState")]
 script = ExtResource("6_fjrip")
+initialState = NodePath("PlayerMove")
 metadata/_custom_type_script = "uid://bikqoxvuev3b3"
+
+[node name="PlayerMove" type="Node" parent="StateMachine" unique_id=500591050]
+script = ExtResource("8_smehm")
+metadata/_custom_type_script = "uid://bdxq81t10fk3b"
+
+[node name="PlayerWallhang" type="Node" parent="StateMachine" unique_id=746667909]
+script = ExtResource("8_ur7pv")
+metadata/_custom_type_script = "uid://bdxq81t10fk3b"
