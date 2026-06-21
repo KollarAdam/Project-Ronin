@@ -46,7 +46,7 @@ public partial class MovementComponent : Node
 		{
 			velocityY = -_jumpStrength;
 		}
-		if (!isOnFloor && CoyoteTime <= 0 && _remainingJumps != 0)
+		if (!isOnFloor && CoyoteTime <= 0 && _remainingJumps != 0 && !isOnWallOnly)
 		{
 			velocityY = -_jumpStrength;
 			_remainingJumps--;

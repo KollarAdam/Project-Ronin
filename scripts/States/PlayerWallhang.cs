@@ -3,8 +3,8 @@ using System;
 [GlobalClass]
 public partial class PlayerWallhang : PlayerState
 {
-
-
+	private float _wallSlide = 200f;
+	private float _hangGracePeriod = 1f;
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
@@ -15,16 +15,15 @@ public partial class PlayerWallhang : PlayerState
 		bool isOnFloor = player.IsOnFloor();
 		bool isOnWallOnly = player.IsOnWallOnly();
 
-		if (player.IsWallHanging(player.input.Direction))
+		if (_IsWallHanging(player.input.Direction))
 		{
-			player.hangGracePeriod -= (float)delta;
+			_hangGracePeriod -= (float)delta;
 			velocity.Y = 0f;
-			if (player.hangGracePeriod <= 0f)
+			if (_hangGracePeriod <= 0f)
 			{
-				velocity.Y += (float)(player.wallSlide * delta);
-				if (player.wallSlide <= 2000f) player.wallSlide *= 1.02f;
+				velocity.Y += (float)(_wallSlide * delta);
+				if (_wallSlide <= 2000f) _wallSlide *= 1.02f;
 			}
-			;
 			if (player.input.Jump)
 			{
 				velocity.Y = player.movement.ApplyJump(velocity.Y, isOnFloor, isOnWallOnly);
@@ -34,8 +33,9 @@ public partial class PlayerWallhang : PlayerState
 		}
 		else
 		{
-			player.wallSlide = 200f;
-			player.hangGracePeriod = 1f;
+			_wallSlide = 200f;
+			_hangGracePeriod = 1f;
 		}
 	}
+	private bool _IsWallHanging(float input){ return player.IsOnWallOnly() && (input == -player.GetWallNormal().X);}
 }

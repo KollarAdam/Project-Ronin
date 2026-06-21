@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bikqoxvuev3b3" path="res://scripts/States/StateMachine.cs" id="6_fjrip"]
 [ext_resource type="Script" uid="uid://dmqy61s55dyje" path="res://scripts/States/PlayerMove.cs" id="8_smehm"]
 [ext_resource type="Script" uid="uid://c0chpu2marego" path="res://scripts/States/PlayerWallhang.cs" id="8_ur7pv"]
+[ext_resource type="Script" uid="uid://cegnwht5uymat" path="res://scripts/States/PlayerIdle.cs" id="9_ur7pv"]
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "Idle"
@@ -187,4 +188,8 @@ metadata/_custom_type_script = "uid://bdxq81t10fk3b"
 
 [node name="PlayerWallhang" type="Node" parent="StateMachine" unique_id=746667909]
 script = ExtResource("8_ur7pv")
+metadata/_custom_type_script = "uid://bdxq81t10fk3b"
+
+[node name="PlayerIdle" type="Node" parent="StateMachine" unique_id=2140840081]
+script = ExtResource("9_ur7pv")
 metadata/_custom_type_script = "uid://bdxq81t10fk3b"

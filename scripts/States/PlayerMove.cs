@@ -3,7 +3,7 @@ using System;
 [GlobalClass]
 public partial class PlayerMove : PlayerState
 {
-
+	private float _coyoteTime = 0f;
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
@@ -15,8 +15,8 @@ public partial class PlayerMove : PlayerState
 		bool isOnFloor = player.IsOnFloor();
 		bool isOnWallOnly = player.IsOnWallOnly();
 		
-		player.coyoteTime -= (float)delta;
-		player.movement.CoyoteTime = player.coyoteTime;
+		_coyoteTime -= (float)delta;
+		player.movement.CoyoteTime = _coyoteTime;
 
 		velocity.Y = player.movement.ApplyGravity(velocity.Y, delta, isOnFloor);
 
@@ -39,7 +39,7 @@ public partial class PlayerMove : PlayerState
 
 		player.Velocity = velocity;
 
-		if (wasOnFloor && !player.IsOnFloor() && velocity.Y >= 0) player.coyoteTime = 0.1f;
+		if (wasOnFloor && !player.IsOnFloor() && velocity.Y >= 0) _coyoteTime = 0.1f;
 	}
 
 }
