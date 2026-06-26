@@ -4,6 +4,7 @@ using System;
 public partial class PlayerState : Node
 {
 	public Player player;
+	public Vector2 velocity;
 	public Action<PlayerState,string> StateChanged;
     public override void _Ready()
     {
@@ -19,10 +20,10 @@ public partial class PlayerState : Node
 		
 	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public virtual void Process(double delta)
 	{
 	}
-    public override void _PhysicsProcess(double delta)
+    public virtual void PhysicsProcess(double delta)
     {
         
     }

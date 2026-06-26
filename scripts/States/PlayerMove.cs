@@ -1,45 +1,49 @@
 using Godot;
 using System;
+
 [GlobalClass]
 public partial class PlayerMove : PlayerState
 {
-	private float _coyoteTime = 0f;
+	public override void Enter()
+	{
+		GD.Print("Entered MOVE state");
+		player.movement.ResetJumps(player.IsOnFloor());
+	}
+	public override void Exit()
+	{
+		GD.Print("Exited MOVE state");
+	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void Process(double delta)
 	{
 
 	}
-	public override void _PhysicsProcess(double delta)
+	public override void PhysicsProcess(double delta)
 	{
-		Vector2 velocity = player.Velocity;
-		bool isOnFloor = player.IsOnFloor();
-		bool isOnWallOnly = player.IsOnWallOnly();
-		
-		_coyoteTime -= (float)delta;
-		player.movement.CoyoteTime = _coyoteTime;
+		velocity = player.Velocity;
 
-		velocity.Y = player.movement.ApplyGravity(velocity.Y, delta, isOnFloor);
-
-		player.movement.ResetJumps(player.IsOnFloor());
-
-		if (player.input.Jump)
+		if (player.IsOnFloor())
 		{
-			velocity.Y = player.movement.ApplyJump(velocity.Y, isOnFloor, isOnWallOnly);
-		}
-		if (player.input.Direction == 0)
-		{
-			velocity.X = player.movement.ApplyFriction(velocity.X, delta, isOnFloor);
+			if (player.input.Jump)
+			{
+				StateChanged?.Invoke(this, "PLAYERJUMP");
+			}
 		}
 		else
 		{
-			velocity.X = player.movement.AccelerateHorizontally(player.input.Direction, velocity.X ,delta, isOnFloor);
+			StateChanged?.Invoke(this, "PLAYERFALL");
 		}
 
-		var wasOnFloor = isOnFloor;
+		if (player.input.Direction == 0)
+		{
+			StateChanged?.Invoke(this, "PLAYERIDLE");
+		}
+		else
+		{
+			velocity.X = player.movement.AccelerateHorizontally(player.input.Direction, velocity.X, delta, player.IsOnFloor());
+		}
+
 
 		player.Velocity = velocity;
-
-		if (wasOnFloor && !player.IsOnFloor() && velocity.Y >= 0) _coyoteTime = 0.1f;
 	}
-
 }

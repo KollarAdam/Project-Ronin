@@ -13,7 +13,7 @@ public partial class MovementComponent : Node
 	[Export] private float _jumpStrength = 200f;
 	[Export] private int _extraJumps = 1;
 
-	private int _remainingJumps = 1;
+	public int remainingJumps = 1;
 	public float JumpStrength{ get{return _jumpStrength;} private set{_jumpStrength = value;}}
 	public float CoyoteTime {get; set;}
 
@@ -40,19 +40,19 @@ public partial class MovementComponent : Node
 		}
 		return velocityY;
 	}
-	public float ApplyJump(float velocityY, bool isOnFloor, bool isOnWallOnly)
+	public float ApplyJump(float velocityY, bool isOnFloor)
 	{
-		if (isOnFloor || CoyoteTime > 0 || isOnWallOnly)
+		if (isOnFloor || CoyoteTime > 0)
 		{
 			velocityY = -_jumpStrength;
 		}
-		if (!isOnFloor && CoyoteTime <= 0 && _remainingJumps != 0 && !isOnWallOnly)
+		if (!isOnFloor && CoyoteTime <= 0 && remainingJumps != 0)
 		{
 			velocityY = -_jumpStrength;
-			_remainingJumps--;
+			remainingJumps--;
 		}
 		return velocityY;
 	}
-	public void ResetJumps(bool isOnFloor){ if (isOnFloor){_remainingJumps = _extraJumps;}}
+	public void ResetJumps(bool isOnFloor){ if (isOnFloor){remainingJumps = _extraJumps;}}
 
 }

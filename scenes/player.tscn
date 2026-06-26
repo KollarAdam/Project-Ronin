@@ -7,8 +7,10 @@
 [ext_resource type="Script" uid="uid://cktk87wifhnik" path="res://scripts/Components/InputComponent.cs" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://bikqoxvuev3b3" path="res://scripts/States/StateMachine.cs" id="6_fjrip"]
 [ext_resource type="Script" uid="uid://dmqy61s55dyje" path="res://scripts/States/PlayerMove.cs" id="8_smehm"]
-[ext_resource type="Script" uid="uid://c0chpu2marego" path="res://scripts/States/PlayerWallhang.cs" id="8_ur7pv"]
+[ext_resource type="Script" uid="uid://bdxq81t10fk3b" path="res://scripts/States/PlayerState.cs" id="8_ur7pv"]
 [ext_resource type="Script" uid="uid://cegnwht5uymat" path="res://scripts/States/PlayerIdle.cs" id="9_ur7pv"]
+[ext_resource type="Script" uid="uid://b76pv6rh2ipvh" path="res://scripts/States/PlayerJump.cs" id="10_y4r1p"]
+[ext_resource type="Script" uid="uid://cnsfcf6pg1aac" path="res://scripts/States/PlayerFall.cs" id="11_d2wvv"]
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "Idle"
@@ -125,7 +127,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
-size = Vector2(14, 39.5)
+size = Vector2(12, 39.5)
 
 [node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("input", "movement")]
 script = ExtResource("1_4flbx")
@@ -163,14 +165,16 @@ position = Vector2(5, 0)
 _input = NodePath("../../InputComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1650341063]
-position = Vector2(0, 0.25)
+position = Vector2(-1, 0.25)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1633060614]
 script = ExtResource("3_dqkch")
-_upGravity = 520.0
+_airAcceleration = 500.0
+_airFriction = 10000.0
+_upGravity = 900.0
 _downGravity = 800.0
-_jumpStrength = 260.0
+_jumpStrength = 270.0
 metadata/_custom_type_script = "uid://crvc04pu0kefe"
 
 [node name="InputComponent" type="Node" parent="." unique_id=456736668]
@@ -179,7 +183,7 @@ metadata/_custom_type_script = "uid://cktk87wifhnik"
 
 [node name="StateMachine" type="Node" parent="." unique_id=2106516997 node_paths=PackedStringArray("initialState")]
 script = ExtResource("6_fjrip")
-initialState = NodePath("PlayerMove")
+initialState = NodePath("PlayerIdle")
 metadata/_custom_type_script = "uid://bikqoxvuev3b3"
 
 [node name="PlayerMove" type="Node" parent="StateMachine" unique_id=500591050]
@@ -192,4 +196,12 @@ metadata/_custom_type_script = "uid://bdxq81t10fk3b"
 
 [node name="PlayerIdle" type="Node" parent="StateMachine" unique_id=2140840081]
 script = ExtResource("9_ur7pv")
+metadata/_custom_type_script = "uid://bdxq81t10fk3b"
+
+[node name="PlayerJump" type="Node" parent="StateMachine" unique_id=220501384]
+script = ExtResource("10_y4r1p")
+metadata/_custom_type_script = "uid://bdxq81t10fk3b"
+
+[node name="PlayerFall" type="Node" parent="StateMachine" unique_id=979149528]
+script = ExtResource("11_d2wvv")
 metadata/_custom_type_script = "uid://bdxq81t10fk3b"

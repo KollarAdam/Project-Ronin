@@ -18,7 +18,10 @@ public partial class Player : CharacterBody2D
     }
 	public override void _PhysicsProcess(double delta)
 	{
+		Vector2 velocity = Velocity;
 		input.Update();
+		velocity.Y = movement.ApplyGravity(Velocity.Y, delta, IsOnFloor());
+		Velocity = velocity;
 		MoveAndSlide();
 	}
 

@@ -27,11 +27,21 @@ public partial class StateMachine : Node
     }
 	public override void _Process(double delta)
 	{
-		currentState?._Process(delta);
+		currentState?.Process(delta);
 	}
     public override void _PhysicsProcess(double delta)
     {
-        currentState?._PhysicsProcess(delta);
+        currentState?.PhysicsProcess(delta);
+    }
+    public override void _ExitTree()
+    {
+        foreach(PlayerState child in GetChildren().Cast<PlayerState>())
+		{
+			if(child is PlayerState)
+			{
+				child.StateChanged -= OnStateChange;
+			}
+		}
     }
 
 	public void OnStateChange(PlayerState state,string newStateName)
