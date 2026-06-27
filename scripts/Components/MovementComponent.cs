@@ -12,10 +12,11 @@ public partial class MovementComponent : Node
 	[Export] private float _downGravity = 1000f;
 	[Export] private float _jumpStrength = 200f;
 	[Export] private int _extraJumps = 1;
-
+	private float _coyoteTime = 0.1f;
+	private const float _COYOTETIMEDEFAULTVALUE = 0.1f;
 	public int remainingJumps = 1;
-	public float JumpStrength{ get{return _jumpStrength;} private set{_jumpStrength = value;}}
-	public float CoyoteTime {get; set;}
+	public float JumpStrength { get { return _jumpStrength; } private set { _jumpStrength = value; } }
+	public float CoyoteTime { get { return _coyoteTime; } set { _coyoteTime = value;} }
 
 	public float AccelerateHorizontally(float horDir, float velocityX, double delta, bool isOnFloor)
 	{
@@ -42,17 +43,24 @@ public partial class MovementComponent : Node
 	}
 	public float ApplyJump(float velocityY, bool isOnFloor)
 	{
-		if (isOnFloor || CoyoteTime > 0)
+		if (isOnFloor || _coyoteTime > 0)
 		{
 			velocityY = -_jumpStrength;
 		}
-		if (!isOnFloor && CoyoteTime <= 0 && remainingJumps != 0)
+
+		return velocityY;
+	}
+	public float ApplyDoubleJump(float velocityY, bool isOnFloor)
+	{
+		if (!isOnFloor && _coyoteTime <= 0 && remainingJumps > 0)
 		{
 			velocityY = -_jumpStrength;
 			remainingJumps--;
 		}
+
 		return velocityY;
 	}
-	public void ResetJumps(bool isOnFloor){ if (isOnFloor){remainingJumps = _extraJumps;}}
+	public void ResetJumps(bool isOnFloor) { if (isOnFloor) { remainingJumps = _extraJumps; } }
+	public void ResetCoyoteFrames(bool isOnFloor) { if (isOnFloor) { _coyoteTime = _COYOTETIMEDEFAULTVALUE;} }
 
 }

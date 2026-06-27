@@ -6,12 +6,12 @@ public partial class PlayerMove : PlayerState
 {
 	public override void Enter()
 	{
-		GD.Print("Entered MOVE state");
 		player.movement.ResetJumps(player.IsOnFloor());
+		player.movement.ResetCoyoteFrames(player.IsOnFloor());
 	}
 	public override void Exit()
 	{
-		GD.Print("Exited MOVE state");
+
 	}
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void Process(double delta)

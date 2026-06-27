@@ -5,12 +5,11 @@ public partial class PlayerIdle : PlayerState
 {
     public override void Enter()
     {
-        GD.Print("Entered IDLE state");
         player.movement.ResetJumps(player.IsOnFloor());
+        player.movement.ResetCoyoteFrames(player.IsOnFloor());
     }
     public override void Exit()
     {
-        GD.Print("Exited IDLE state");
     }
     public override void Process(double delta)
     {

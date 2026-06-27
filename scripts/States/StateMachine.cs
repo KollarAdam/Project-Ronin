@@ -8,7 +8,7 @@ public partial class StateMachine : Node
 	[Export] private PlayerState initialState;
 	private PlayerState currentState;
 	private Dictionary<string, PlayerState> states = new Dictionary<string, PlayerState>();
-
+	public string CurrentState {get{return states.FirstOrDefault(x => x.Value == currentState).Key;}}
     public override void _Ready()
     {
         foreach(PlayerState child in GetChildren().Cast<PlayerState>())
@@ -54,7 +54,7 @@ public partial class StateMachine : Node
 
 		currentState?.Exit();
 
-		newState.Enter();
+		newState?.Enter();
 		currentState = newState;
 	}
 

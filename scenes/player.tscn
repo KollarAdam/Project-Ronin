@@ -11,6 +11,8 @@
 [ext_resource type="Script" uid="uid://cegnwht5uymat" path="res://scripts/States/PlayerIdle.cs" id="9_ur7pv"]
 [ext_resource type="Script" uid="uid://b76pv6rh2ipvh" path="res://scripts/States/PlayerJump.cs" id="10_y4r1p"]
 [ext_resource type="Script" uid="uid://cnsfcf6pg1aac" path="res://scripts/States/PlayerFall.cs" id="11_d2wvv"]
+[ext_resource type="Script" uid="uid://brgratahelepx" path="res://scripts/States/PlayerDoubleJump.cs" id="12_3v2ag"]
+[ext_resource type="Script" uid="uid://bmeb2o0fke8kk" path="res://scripts/Label.cs" id="13_jej6c"]
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "Idle"
@@ -174,7 +176,7 @@ _airAcceleration = 500.0
 _airFriction = 10000.0
 _upGravity = 900.0
 _downGravity = 800.0
-_jumpStrength = 270.0
+_jumpStrength = 260.0
 metadata/_custom_type_script = "uid://crvc04pu0kefe"
 
 [node name="InputComponent" type="Node" parent="." unique_id=456736668]
@@ -182,6 +184,7 @@ script = ExtResource("4_dqkch")
 metadata/_custom_type_script = "uid://cktk87wifhnik"
 
 [node name="StateMachine" type="Node" parent="." unique_id=2106516997 node_paths=PackedStringArray("initialState")]
+unique_name_in_owner = true
 script = ExtResource("6_fjrip")
 initialState = NodePath("PlayerIdle")
 metadata/_custom_type_script = "uid://bikqoxvuev3b3"
@@ -205,3 +208,14 @@ metadata/_custom_type_script = "uid://bdxq81t10fk3b"
 [node name="PlayerFall" type="Node" parent="StateMachine" unique_id=979149528]
 script = ExtResource("11_d2wvv")
 metadata/_custom_type_script = "uid://bdxq81t10fk3b"
+
+[node name="PlayerDoubleJump" type="Node" parent="StateMachine" unique_id=2079168451]
+script = ExtResource("12_3v2ag")
+metadata/_custom_type_script = "uid://bdxq81t10fk3b"
+
+[node name="Label" type="Label" parent="." unique_id=1417109159]
+offset_left = -19.0
+offset_top = -42.0
+offset_right = 21.0
+offset_bottom = -19.0
+script = ExtResource("13_jej6c")

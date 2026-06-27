@@ -16,10 +16,14 @@ public partial class Player : CharacterBody2D
         upperBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerUpper");
         lowerBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerLower");
     }
+    public override void _Process(double delta)
+    {
+        
+    }
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 velocity = Velocity;
 		input.Update();
+		Vector2 velocity = Velocity;
 		velocity.Y = movement.ApplyGravity(Velocity.Y, delta, IsOnFloor());
 		Velocity = velocity;
 		MoveAndSlide();
