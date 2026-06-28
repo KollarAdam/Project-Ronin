@@ -1,12 +1,11 @@
 using Godot;
 using System;
-
-public partial class Player : CharacterBody2D
+[GlobalClass]
+public partial class Player : Entity
 {
 	[ExportGroup("Components")]
 	[Export] public InputComponent input;
 	[Export] public MovementComponent movement;
-
 	public Node2D anchor;
 	public AnimationPlayer upperBody;
 	public AnimationPlayer lowerBody;
@@ -29,5 +28,9 @@ public partial class Player : CharacterBody2D
 		MoveAndSlide();
 	}
 
+	public override void TakeDamage(int dmg)
+	{
+		GD.Print($"Player got hit for {dmg} damage!");
+	}
 
 }

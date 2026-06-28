@@ -4,11 +4,11 @@ using System;
 [GlobalClass]
 public partial class Hurtbox : Area2D
 {
+    [Export] private Entity _entity;
     public Action<int> TakeDamage;
 
     public override void _Ready()
     {
-
         AreaEntered += _OnAreaEntered;
     }
     public override void _ExitTree()
@@ -16,14 +16,14 @@ public partial class Hurtbox : Area2D
         AreaEntered -= _OnAreaEntered;
     }
 
-	private void _OnAreaEntered(Area2D area)
-	{
+    private void _OnAreaEntered(Area2D area)
+    {
         Hitbox hitbox = area as Hitbox;
-        if(hitbox is Hitbox)
+        if (hitbox is Hitbox)
         {
-            TakeDamage?.Invoke(hitbox.damage);
+            _entity.TakeDamage(hitbox.Damage);   
         }
-	}
+    }
 
 
 }

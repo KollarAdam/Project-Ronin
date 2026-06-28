@@ -58,8 +58,9 @@ _data = {
 &"RESET": SubResource("Animation_6fs0s")
 }
 
-[node name="Attack" type="Node2D" unique_id=1469314117]
+[node name="Attack" type="Node2D" unique_id=1469314117 node_paths=PackedStringArray("_attackAnim")]
 script = ExtResource("1_6fs0s")
+_attackAnim = NodePath("AnimationPlayerSwing")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=319573813]
 visible = false
@@ -67,9 +68,10 @@ position = Vector2(23, -3)
 texture = ExtResource("1_jy1op")
 hframes = 4
 
-[node name="Hitbox" type="Area2D" parent="Sprite2D" unique_id=239305249]
+[node name="Hitbox" type="Area2D" parent="Sprite2D" unique_id=239305249 node_paths=PackedStringArray("_attackDamage")]
 monitoring = false
 script = ExtResource("1_nursx")
+_attackDamage = NodePath("../..")
 metadata/_custom_type_script = "uid://cbkwrxx4gb2m4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Hitbox" unique_id=517145041]

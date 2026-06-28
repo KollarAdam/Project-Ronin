@@ -1,34 +1,40 @@
 using Godot;
 using System;
-
+[GlobalClass]
 public partial class Attack : Node2D
 {
-    [Export] private InputComponent _input;
+    [Export] private Entity _entity;
+    [Export] private AnimationPlayer _attackAnim;
     [Export] private int _damage = 1;
     [Export] private float _attackSpeed = 1f;
-    private AnimationPlayer _attackAnim;
     private Player _player;
+    public int Damage
+    {
+        get{return _damage;}
+    }
     public override void _Ready()
     {
-        _attackAnim = GetNode<AnimationPlayer>("AnimationPlayerSwing");
-        _player = GetOwner<Player>();
+        if(_entity is Player)
+        {
+            _player = (Player)_entity;
+        }
     }
     public override void _Process(double delta)
     {
         _attackAnim.SpeedScale = _attackSpeed;
         _AttackDir();
-        if (_input.Attack)
+        if (_player.input.Attack)
         {
             _attackAnim.Play("Attack"); 
         }
     }
     private void _AttackDir()
     {
-        if (_input.Up)
+        if (_player.input.Up)
         {
             RotationDegrees = -90f;
         }
-        else if (_input.Down && !_player.IsOnFloor())
+        else if (_player.input.Down && !_player.IsOnFloor())
         {
             RotationDegrees = 90f;
         }

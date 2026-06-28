@@ -87,9 +87,10 @@ tile_set = SubResource("TileSet_036b0")
 [node name="Player" parent="." unique_id=68965221 instance=ExtResource("2_tlwt5")]
 position = Vector2(138, 94)
 
-[node name="Node2D" parent="." unique_id=6245860 instance=ExtResource("3_4wyf3")]
-position = Vector2(211, 135)
-_hp = 10
+[node name="Enemy2" parent="." unique_id=1185004237 instance=ExtResource("3_4wyf3")]
+position = Vector2(213, 135)
+_hp = 3
 
-[node name="Node2D2" parent="." unique_id=1542873599 instance=ExtResource("3_4wyf3")]
-position = Vector2(42, 135)
+[node name="Enemy1" parent="." unique_id=999233999 instance=ExtResource("3_4wyf3")]
+position = Vector2(31, 135)
+_hp = 10

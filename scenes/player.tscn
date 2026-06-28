@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://cnsfcf6pg1aac" path="res://scripts/States/PlayerFall.cs" id="11_d2wvv"]
 [ext_resource type="Script" uid="uid://brgratahelepx" path="res://scripts/States/PlayerDoubleJump.cs" id="12_3v2ag"]
 [ext_resource type="Script" uid="uid://bmeb2o0fke8kk" path="res://scripts/Label.cs" id="13_jej6c"]
+[ext_resource type="Script" uid="uid://db8x5uymgk2hw" path="res://scripts/Hurtbox.cs" id="14_f1ej7"]
 
 [sub_resource type="Animation" id="Animation_fjrip"]
 resource_name = "Idle"
@@ -131,6 +132,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
 size = Vector2(12, 39.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oprun"]
+size = Vector2(12, 39.5)
+
 [node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("input", "movement")]
 script = ExtResource("1_4flbx")
 input = NodePath("InputComponent")
@@ -162,20 +166,30 @@ libraries/ = SubResource("AnimationLibrary_fjrip")
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_y4r1p")
 
-[node name="Attack" parent="Anchor" unique_id=1469314117 node_paths=PackedStringArray("_input") instance=ExtResource("3_qlg0r")]
+[node name="Attack" parent="Anchor" unique_id=1469314117 node_paths=PackedStringArray("_entity") instance=ExtResource("3_qlg0r")]
 position = Vector2(5, 0)
-_input = NodePath("../../InputComponent")
+_entity = NodePath("../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1650341063]
 position = Vector2(-1, 0.25)
 shape = SubResource("RectangleShape2D_onrkg")
 
+[node name="Hurtbox" type="Area2D" parent="." unique_id=525412187 node_paths=PackedStringArray("_entity")]
+script = ExtResource("14_f1ej7")
+_entity = NodePath("..")
+metadata/_custom_type_script = "uid://db8x5uymgk2hw"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1598760862]
+position = Vector2(-1, 0.25)
+shape = SubResource("RectangleShape2D_oprun")
+
 [node name="MovementComponent" type="Node" parent="." unique_id=1633060614]
 script = ExtResource("3_dqkch")
+_maxMoveSpeed = 220.0
 _airAcceleration = 500.0
 _airFriction = 10000.0
-_upGravity = 900.0
-_downGravity = 800.0
+_upGravity = 1200.0
+_downGravity = 1500.0
 _jumpStrength = 260.0
 metadata/_custom_type_script = "uid://crvc04pu0kefe"
 
