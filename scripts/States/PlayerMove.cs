@@ -6,8 +6,8 @@ public partial class PlayerMove : PlayerState
 {
 	public override void Enter()
 	{
-		player.movement.ResetJumps(player.IsOnFloor());
-		player.movement.ResetCoyoteFrames(player.IsOnFloor());
+		player.movement.ResetJumps();
+		player.movement.ResetCoyoteFrames();
 	}
 	public override void Exit()
 	{
@@ -21,7 +21,6 @@ public partial class PlayerMove : PlayerState
 	public override void PhysicsProcess(double delta)
 	{
 		velocity = player.Velocity;
-
 		if (player.IsOnFloor())
 		{
 			if (player.input.Jump)

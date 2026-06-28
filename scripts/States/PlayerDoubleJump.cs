@@ -21,6 +21,7 @@ public partial class PlayerDoubleJump : PlayerState
 		player.movement.CoyoteTime -= (float)delta;
 		velocity.X = player.movement.AccelerateHorizontally(player.input.Direction, velocity.X, delta, player.IsOnFloor());
 		velocity.Y = player.movement.ApplyDoubleJump(player.Velocity.Y, player.IsOnFloor());
+        velocity.Y = player.movement.ApplyGravity(velocity.Y, delta, player.IsOnFloor());
 		player.Velocity = velocity;
         if(velocity.Y >= 0){
 			StateChanged?.Invoke(this, "PLAYERFALL");

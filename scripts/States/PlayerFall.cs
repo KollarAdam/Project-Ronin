@@ -14,6 +14,7 @@ public partial class PlayerFall : PlayerState
         velocity = player.Velocity;
         player.movement.CoyoteTime -= (float)delta;
         velocity.X = player.movement.AccelerateHorizontally(player.input.Direction, velocity.X, delta, player.IsOnFloor());
+        velocity.Y = player.movement.ApplyGravity(velocity.Y, delta, player.IsOnFloor());
         player.Velocity = velocity;
         if (player.IsOnFloor())
         {
@@ -32,7 +33,7 @@ public partial class PlayerFall : PlayerState
             {
                 if (player.movement.CoyoteTime > 0)
                 {
-                    StateChanged?.Invoke(this,"PLAYERJUMP");
+                    StateChanged?.Invoke(this, "PLAYERJUMP");
                 }
                 else
                 {
@@ -41,6 +42,10 @@ public partial class PlayerFall : PlayerState
                         StateChanged?.Invoke(this, "PLAYERDOUBLEJUMP");
                     }
                 }
+            }
+            if (player.movement.IsWallHanging(player.input.Direction, player.IsOnWallOnly(), player.IsOnFloor(), player.GetWallNormal()))
+            {
+                StateChanged?.Invoke(this, "PLAYERWALLHANG");
             }
         }
     }

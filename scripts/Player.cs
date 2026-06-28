@@ -17,13 +17,12 @@ public partial class Player : Entity
     }
     public override void _Process(double delta)
     {
-        
+        GD.Print(movement.CoyoteTime);
     }
 	public override void _PhysicsProcess(double delta)
 	{
 		input.Update();
 		Vector2 velocity = Velocity;
-		velocity.Y = movement.ApplyGravity(Velocity.Y, delta, IsOnFloor());
 		Velocity = velocity;
 		MoveAndSlide();
 	}

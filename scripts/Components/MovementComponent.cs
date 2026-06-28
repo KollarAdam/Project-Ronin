@@ -12,11 +12,17 @@ public partial class MovementComponent : Node
 	[Export] private float _downGravity = 1000f;
 	[Export] private float _jumpStrength = 200f;
 	[Export] private int _extraJumps = 1;
+	[Export] private float _wallSlide = 20f;
+	[Export] private float _hangGracePeriod = 3f;
 	private float _coyoteTime = 0.1f;
-	private const float _COYOTETIMEDEFAULTVALUE = 0.1f;
+	private const float _COYOTETIMEDEFAULTVALUE = 0.1f; 
+	private const float _WALLSLIDEDEFAULTVALUE = 20f;
+	private const float _HANGGRACEPERIODDEFAULTVALUE = 3f;
 	public int remainingJumps = 1;
+	public float WallSlide { get { return _wallSlide; } }
+	public float HangGracePeriod { get { return _hangGracePeriod; } set { _hangGracePeriod = value; } }
 	public float JumpStrength { get { return _jumpStrength; } private set { _jumpStrength = value; } }
-	public float CoyoteTime { get { return _coyoteTime; } set { _coyoteTime = value;} }
+	public float CoyoteTime { get { return _coyoteTime; } set { _coyoteTime = value; } }
 
 	public float AccelerateHorizontally(float horDir, float velocityX, double delta, bool isOnFloor)
 	{
@@ -54,13 +60,31 @@ public partial class MovementComponent : Node
 	{
 		if (!isOnFloor && _coyoteTime <= 0 && remainingJumps > 0)
 		{
-			velocityY = -_jumpStrength;
+			velocityY = -_jumpStrength*1.2f;
 			remainingJumps--;
 		}
 
 		return velocityY;
 	}
-	public void ResetJumps(bool isOnFloor) { if (isOnFloor) { remainingJumps = _extraJumps; } }
-	public void ResetCoyoteFrames(bool isOnFloor) { if (isOnFloor) { _coyoteTime = _COYOTETIMEDEFAULTVALUE;} }
-
+	public void ResetJumps() {remainingJumps = _extraJumps; }
+	public void ResetCoyoteFrames() {  _coyoteTime = _COYOTETIMEDEFAULTVALUE;  }
+	public bool IsWallHanging(float input, bool isOnWallOnly, bool isOnFloor, Vector2 wallNormal) { return isOnWallOnly && !isOnFloor && (input == -wallNormal.X); }
+	public float WallHang(float velocityY, double delta)
+	{
+		if (_hangGracePeriod > 0)
+		{
+			_hangGracePeriod -= (float)delta;
+		}
+		else
+		{
+			velocityY += (float)(_wallSlide*delta);
+			if (_wallSlide < 100f) _wallSlide *= 1.02f;
+		}
+		return velocityY;
+	}
+	public void ResetWallhangValues()
+	{
+		_hangGracePeriod = _HANGGRACEPERIODDEFAULTVALUE;
+		_wallSlide = _WALLSLIDEDEFAULTVALUE;
+	}
 }

@@ -3,8 +3,17 @@ using System;
 [GlobalClass]
 public partial class PlayerWallhang : PlayerState
 {
-	private float _wallSlide = 200f;
-	private float _hangGracePeriod = 1f;
+    public override void Enter()
+    {
+		player.Velocity = Vector2.Zero;
+		player.movement.ResetCoyoteFrames();
+		player.movement.CoyoteTime *= 2;
+    }
+    public override void Exit()
+    {
+        player.movement.ResetWallhangValues();
+		GD.Print($"Grace period and wallslide reset {player.movement.HangGracePeriod}, {player.movement.WallSlide}");
+    }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void Process(double delta)
@@ -12,22 +21,19 @@ public partial class PlayerWallhang : PlayerState
 	}
 	public override void PhysicsProcess(double delta)
 	{
-		Vector2 velocity = player.Velocity;
-		bool isOnFloor = player.IsOnFloor();
-		bool isOnWallOnly = player.IsOnWallOnly();
-		_hangGracePeriod -= (float)delta;
-		velocity.Y = 0f;
-		if (_hangGracePeriod <= 0f)
+		velocity = player.Velocity;
+		if(player.movement.IsWallHanging(player.input.Direction, player.IsOnWallOnly(), player.IsOnFloor(), player.GetWallNormal()))
 		{
-			velocity.Y += (float)(_wallSlide * delta);
-			if (_wallSlide <= 2000f) _wallSlide *= 1.02f;
+			velocity.Y = player.movement.WallHang(velocity.Y, delta);
+			if (player.input.Jump)
+			{
+				
+			}
 		}
-		if (player.input.Jump)
+		else
 		{
-			velocity.Y = player.movement.ApplyJump(velocity.Y, isOnFloor);
-			velocity.X = player.GetWallNormal().X * player.movement.JumpStrength / 2;
+			StateChanged?.Invoke(this, "PLAYERFALL");
 		}
 		player.Velocity = velocity;
 	}
-	private bool _IsWallHanging(float input) { return player.IsOnWallOnly() && (input == -player.GetWallNormal().X); }
 }

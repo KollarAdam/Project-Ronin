@@ -5,7 +5,7 @@ using System;
 public partial class Hurtbox : Area2D
 {
     [Export] private Entity _entity;
-    public Action<int> TakeDamage;
+    // public Action<int> TakeDamage;
 
     public override void _Ready()
     {
