@@ -7,12 +7,10 @@ public partial class PlayerWallhang : PlayerState
     {
 		player.Velocity = Vector2.Zero;
 		player.movement.ResetCoyoteFrames();
-		player.movement.CoyoteTime *= 2;
     }
     public override void Exit()
     {
         player.movement.ResetWallhangValues();
-		GD.Print($"Grace period and wallslide reset {player.movement.HangGracePeriod}, {player.movement.WallSlide}");
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -27,7 +25,7 @@ public partial class PlayerWallhang : PlayerState
 			velocity.Y = player.movement.WallHang(velocity.Y, delta);
 			if (player.input.Jump)
 			{
-				
+				StateChanged?.Invoke(this,"PLAYERJUMP");
 			}
 		}
 		else

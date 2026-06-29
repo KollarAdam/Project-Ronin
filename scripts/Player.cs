@@ -16,14 +16,13 @@ public partial class Player : Entity
         lowerBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerLower");
     }
     public override void _Process(double delta)
-    {
-        GD.Print(movement.CoyoteTime);
-    }
+	{
+		upperBody.Play("Idle");
+		lowerBody.Play("Idle");
+	}
 	public override void _PhysicsProcess(double delta)
 	{
 		input.Update();
-		Vector2 velocity = Velocity;
-		Velocity = velocity;
 		MoveAndSlide();
 	}
 

@@ -1,14 +1,15 @@
 using Godot;
 using System;
+
 [GlobalClass]
-public partial class PlayerState : Node
+public partial class GenericState : Node
 {
-	public Player player;
+    public Entity entity;
 	public Vector2 velocity;
-	public Action<PlayerState,string> StateChanged;
+	public Action<GenericState,string> StateChanged;
     public override void _Ready()
     {
-        player = GetOwner<Player>();
+        entity = GetOwner<Entity>();
     }
 
     public virtual void Enter()
@@ -27,5 +28,4 @@ public partial class PlayerState : Node
     {
         
     }
-
 }
