@@ -85,7 +85,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -97,7 +97,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [false]
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fvhgg"]
@@ -105,6 +105,9 @@ _data = {
 &"Bruiser_Attack": SubResource("Animation_hu41j"),
 &"RESET": SubResource("Animation_u3e2a")
 }
+
+[sub_resource type="LabelSettings" id="LabelSettings_68cc7"]
+font_size = 8
 
 [node name="EnemyBruiser" type="CharacterBody2D" unique_id=1722046121]
 script = ExtResource("1_68cc7")
@@ -128,8 +131,10 @@ metadata/_custom_type_script = "uid://cbkwrxx4gb2m4"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack/Hitbox" unique_id=1381639336]
 position = Vector2(-19, 0)
 shape = SubResource("RectangleShape2D_6krak")
+disabled = true
 
 [node name="AttackSprite" type="Sprite2D" parent="Attack" unique_id=1261133908]
+visible = false
 position = Vector2(-9, -4)
 texture = ExtResource("4_s5p7r")
 flip_h = true
@@ -179,3 +184,12 @@ metadata/_custom_type_script = "uid://hgrub042rbm3"
 [node name="EnemyDie" type="Node" parent="StateMachine" unique_id=1450291045]
 script = ExtResource("13_f6bff")
 metadata/_custom_type_script = "uid://hgrub042rbm3"
+
+[node name="Label" type="Label" parent="." unique_id=1918568257]
+offset_left = -108.0
+offset_top = -44.0
+offset_right = 108.0
+offset_bottom = -21.0
+label_settings = SubResource("LabelSettings_68cc7")
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -10,22 +10,25 @@ public partial class Attack : Node2D
     private Player _player;
     public int Damage
     {
-        get{return _damage;}
+        get { return _damage; }
     }
     public override void _Ready()
     {
-        if(_entity is Player)
+        if (_entity is Player)
         {
             _player = (Player)_entity;
         }
     }
     public override void _Process(double delta)
     {
-        _attackAnim.SpeedScale = _attackSpeed;
-        _AttackDir();
-        if (_player.input.Attack)
+        if (_player != null)
         {
-            _attackAnim.Play("Attack"); 
+            _attackAnim.SpeedScale = _attackSpeed;
+            _AttackDir();
+            if (_player.input.Attack)
+            {
+                _attackAnim.Play("Attack");
+            }
         }
     }
     private void _AttackDir()

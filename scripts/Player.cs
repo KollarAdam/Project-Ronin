@@ -9,20 +9,26 @@ public partial class Player : Entity
 	public Node2D anchor;
 	public AnimationPlayer upperBody;
 	public AnimationPlayer lowerBody;
-    public override void _Ready()
-    {
+	public override void _Ready()
+	{
 		anchor = GetNode<Node2D>("Anchor");
-        upperBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerUpper");
-        lowerBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerLower");
-    }
-    public override void _Process(double delta)
+		upperBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerUpper");
+		lowerBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerLower");
+	}
+	public override void _Process(double delta)
 	{
 		upperBody.Play("Idle");
 		lowerBody.Play("Idle");
 	}
 	public override void _PhysicsProcess(double delta)
 	{
+		Vector2 anchorScale = anchor.Scale;
 		input.Update();
+		if (input.Direction != 0)
+		{
+			anchorScale.X = Math.Sign(input.Direction);
+			anchor.Scale = anchorScale;
+		}
 		MoveAndSlide();
 	}
 
