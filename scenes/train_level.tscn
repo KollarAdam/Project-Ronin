@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dv3d1x2d08usf" path="res://scenes/enemy_bruiser.tscn" id="3_ejvq3"]
 [ext_resource type="AudioStream" uid="uid://c483sb3wawpyx" path="res://assets/music/train_level_track.mp3" id="4_ijcjr"]
 [ext_resource type="PackedScene" uid="uid://bkteq6vvcknm7" path="res://scenes/box.tscn" id="5_e4diw"]
+[ext_resource type="Texture2D" uid="uid://ca4m5sn152so7" path="res://assets/bg.png" id="6_oaswk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ijcjr"]
 texture = ExtResource("1_jym37")
@@ -90,7 +91,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAADAAIAAAABAAAAAAADAAIAAAATAAAAAAADAAI
 tile_set = SubResource("TileSet_e4diw")
 
 [node name="Player" parent="." unique_id=68965221 instance=ExtResource("2_ejvq3")]
-position = Vector2(90, -117)
+position = Vector2(2602, -42)
 
 [node name="EnemyBruiser" parent="." unique_id=1722046121 instance=ExtResource("3_ejvq3")]
 position = Vector2(1516, 121)
@@ -208,3 +209,14 @@ position = Vector2(2190, -8)
 
 [node name="Box24" parent="." unique_id=1542526880 instance=ExtResource("5_e4diw")]
 position = Vector2(2245, 8)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1893494214]
+z_index = -4
+offset_left = -491.0
+offset_top = -550.0
+offset_right = 3509.0
+offset_bottom = 530.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_oaswk")
+stretch_mode = 1
