@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dj30cont5bw4e" path="res://scenes/player.tscn" id="2_ejvq3"]
 [ext_resource type="PackedScene" uid="uid://dv3d1x2d08usf" path="res://scenes/enemy_bruiser.tscn" id="3_ejvq3"]
 [ext_resource type="AudioStream" uid="uid://c483sb3wawpyx" path="res://assets/music/train_level_track.mp3" id="4_ijcjr"]
+[ext_resource type="PackedScene" uid="uid://bkteq6vvcknm7" path="res://scenes/box.tscn" id="5_e4diw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ijcjr"]
 texture = ExtResource("1_jym37")
@@ -99,13 +100,17 @@ position = Vector2(455, -23)
 position = Vector2(699, -23)
 
 [node name="EnemyBruiser5" parent="." unique_id=994481940 instance=ExtResource("3_ejvq3")]
-position = Vector2(890, 121)
+position = Vector2(891, 121)
+scale = Vector2(-1, 1)
+canPatrol = false
 
 [node name="EnemyBruiser6" parent="." unique_id=1838666102 instance=ExtResource("3_ejvq3")]
-position = Vector2(1002, 121)
+position = Vector2(1036, 121)
+canPatrol = false
 
 [node name="EnemyBruiser7" parent="." unique_id=148269217 instance=ExtResource("3_ejvq3")]
-position = Vector2(1054, 121)
+position = Vector2(1093, 121)
+canPatrol = false
 
 [node name="EnemyBruiser8" parent="." unique_id=76806261 instance=ExtResource("3_ejvq3")]
 position = Vector2(1245, 121)
@@ -115,18 +120,94 @@ position = Vector2(1704, -23)
 
 [node name="EnemyBruiser10" parent="." unique_id=323441475 instance=ExtResource("3_ejvq3")]
 position = Vector2(1768, 121)
+canPatrol = false
 
 [node name="EnemyBruiser11" parent="." unique_id=467424692 instance=ExtResource("3_ejvq3")]
 position = Vector2(1927, 121)
+canPatrol = false
 
 [node name="EnemyBruiser12" parent="." unique_id=526197184 instance=ExtResource("3_ejvq3")]
 position = Vector2(2324, -7)
 
 [node name="EnemyBruiser13" parent="." unique_id=1472942019 instance=ExtResource("3_ejvq3")]
 position = Vector2(2611, 57)
+scale = Vector2(-1, 1)
+slide_on_ceiling = false
+
+[node name="Box" parent="." unique_id=1185004237 instance=ExtResource("5_e4diw")]
+position = Vector2(246, -8)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1795955825]
 stream = ExtResource("4_ijcjr")
 volume_db = -12.0
 autoplay = true
 parameters/looping = true
+
+[node name="Box2" parent="." unique_id=1030971379 instance=ExtResource("5_e4diw")]
+position = Vector2(872, 8)
+
+[node name="Box3" parent="." unique_id=881008326 instance=ExtResource("5_e4diw")]
+position = Vector2(888, 8)
+
+[node name="Box4" parent="." unique_id=1359411418 instance=ExtResource("5_e4diw")]
+position = Vector2(904, 8)
+
+[node name="Box5" parent="." unique_id=324493650 instance=ExtResource("5_e4diw")]
+position = Vector2(872, 24)
+
+[node name="Box6" parent="." unique_id=909576705 instance=ExtResource("5_e4diw")]
+position = Vector2(888, 24)
+
+[node name="Box7" parent="." unique_id=461865588 instance=ExtResource("5_e4diw")]
+position = Vector2(904, 24)
+
+[node name="Box8" parent="." unique_id=271874230 instance=ExtResource("5_e4diw")]
+position = Vector2(1912, 8)
+
+[node name="Box9" parent="." unique_id=1274428638 instance=ExtResource("5_e4diw")]
+position = Vector2(1912, 24)
+
+[node name="Box10" parent="." unique_id=1007400243 instance=ExtResource("5_e4diw")]
+position = Vector2(1928, 24)
+
+[node name="Box11" parent="." unique_id=961298679 instance=ExtResource("5_e4diw")]
+position = Vector2(1928, 8)
+
+[node name="Box12" parent="." unique_id=1365790002 instance=ExtResource("5_e4diw")]
+position = Vector2(1944, 8)
+
+[node name="Box13" parent="." unique_id=76296648 instance=ExtResource("5_e4diw")]
+position = Vector2(1944, 24)
+
+[node name="Box14" parent="." unique_id=1261529845 instance=ExtResource("5_e4diw")]
+position = Vector2(2120, 8)
+
+[node name="Box15" parent="." unique_id=1450666218 instance=ExtResource("5_e4diw")]
+position = Vector2(2141, 8)
+
+[node name="Box16" parent="." unique_id=771144213 instance=ExtResource("5_e4diw")]
+position = Vector2(2160, 8)
+
+[node name="Box17" parent="." unique_id=1098483375 instance=ExtResource("5_e4diw")]
+position = Vector2(2132, -8)
+
+[node name="Box18" parent="." unique_id=849358506 instance=ExtResource("5_e4diw")]
+position = Vector2(2154, -8)
+
+[node name="Box19" parent="." unique_id=1920406159 instance=ExtResource("5_e4diw")]
+position = Vector2(2181, 8)
+
+[node name="Box20" parent="." unique_id=1821762146 instance=ExtResource("5_e4diw")]
+position = Vector2(2200, 8)
+
+[node name="Box21" parent="." unique_id=1675289117 instance=ExtResource("5_e4diw")]
+position = Vector2(2218, 8)
+
+[node name="Box22" parent="." unique_id=1309491203 instance=ExtResource("5_e4diw")]
+position = Vector2(2209, -8)
+
+[node name="Box23" parent="." unique_id=863674280 instance=ExtResource("5_e4diw")]
+position = Vector2(2190, -8)
+
+[node name="Box24" parent="." unique_id=1542526880 instance=ExtResource("5_e4diw")]
+position = Vector2(2245, 8)

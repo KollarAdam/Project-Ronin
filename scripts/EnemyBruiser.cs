@@ -5,8 +5,10 @@ public partial class EnemyBruiser : Entity
 {
     [Export] public MovementComponent movement;
     [Export] public Attack attack;
-    [Export] public RayCast2D mapEdge;
-    [Export] private AttackRange range;
+    [Export] private AttackRange _range;
+    [Export] public bool canPatrol = true;
+    public RayCast2D mapEdge;
+    public RayCast2D wallCollision;
     public float moveDir;
     public Node2D anchor;
     private float _attackDelay = 0f;
@@ -15,8 +17,10 @@ public partial class EnemyBruiser : Entity
     public override void _Ready()
     {
         anchor = GetNode<Node2D>("Anchor");
-        range.PlayerInRange += OnPLayerInRange;
-        range.PlayerOutOfRange += OnPLayerOutOfRange;
+        mapEdge = GetNode<RayCast2D>("Anchor/CheckMapEdge");
+        wallCollision = GetNode<RayCast2D>("Anchor/CheckWall");
+        _range.PlayerInRange += OnPLayerInRange;
+        _range.PlayerOutOfRange += OnPLayerOutOfRange;
     }
     public override void _Process(double delta)
     {
@@ -38,8 +42,8 @@ public partial class EnemyBruiser : Entity
     }
     public override void _ExitTree()
     {
-        range.PlayerInRange -= OnPLayerInRange;
-        range.PlayerOutOfRange -= OnPLayerOutOfRange;
+        _range.PlayerInRange -= OnPLayerInRange;
+        _range.PlayerOutOfRange -= OnPLayerOutOfRange;
     }
 
     public override void TakeDamage(int dmg)

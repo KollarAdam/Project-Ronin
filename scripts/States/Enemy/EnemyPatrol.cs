@@ -7,7 +7,7 @@ public partial class EnemyPatrol : EnemyState
     private float _patrolDirection = -1f; //Positive value: goes right, Negative value: goes left 
     public override void Enter()
     {
-        if (!enemy.mapEdge.IsColliding())
+        if (!enemy.mapEdge.IsColliding() || enemy.wallCollision.IsColliding())
         {
             Vector2 anchorScale = enemy.anchor.Scale;
             anchorScale.X *= -1;
@@ -26,7 +26,7 @@ public partial class EnemyPatrol : EnemyState
     public override void PhysicsProcess(double delta)
     {
         var velocity = enemy.Velocity;
-        if (enemy.mapEdge.IsColliding())
+        if (enemy.mapEdge.IsColliding() && !enemy.wallCollision.IsColliding())
         {
             velocity.X = enemy.movement.AccelerateHorizontally(_patrolDirection, velocity.X, delta, enemy.IsOnFloor());
             enemy.Velocity = velocity;

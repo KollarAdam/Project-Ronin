@@ -16,7 +16,7 @@ public partial class EnemyIdle : EnemyState
     public override void Process(double delta)
     {
         _idleTimer -= (float)delta;
-        if(_idleTimer <= 0)
+        if(_idleTimer <= 0 && enemy.canPatrol)
         {
             StateChanged?.Invoke(this,"ENEMYPATROL");
         }

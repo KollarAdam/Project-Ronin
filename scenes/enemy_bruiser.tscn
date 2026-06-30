@@ -112,13 +112,13 @@ size = Vector2(16, 44)
 [sub_resource type="LabelSettings" id="LabelSettings_68cc7"]
 font_size = 8
 
-[node name="EnemyBruiser" type="CharacterBody2D" unique_id=1722046121 node_paths=PackedStringArray("movement", "attack", "mapEdge", "range")]
+[node name="EnemyBruiser" type="CharacterBody2D" unique_id=1722046121 node_paths=PackedStringArray("movement", "attack", "mapEdge", "_range")]
 collision_layer = 4
 script = ExtResource("1_68cc7")
 movement = NodePath("MovementComponent")
 attack = NodePath("Anchor/Attack")
 mapEdge = NodePath("Anchor/CheckMapEdge")
-range = NodePath("Anchor/AttackRange")
+_range = NodePath("Anchor/AttackRange")
 metadata/_custom_type_script = "uid://b1jj7jhh8gxpk"
 
 [node name="Anchor" type="Node2D" parent="." unique_id=1403579909]
@@ -126,6 +126,10 @@ metadata/_custom_type_script = "uid://b1jj7jhh8gxpk"
 [node name="CheckMapEdge" type="RayCast2D" parent="Anchor" unique_id=1044636593]
 position = Vector2(-17, 0)
 target_position = Vector2(0, 24)
+
+[node name="CheckWall" type="RayCast2D" parent="Anchor" unique_id=3216088]
+position = Vector2(-7, 22)
+target_position = Vector2(-2, 0)
 
 [node name="Attack" type="Node2D" parent="Anchor" unique_id=1628147498 node_paths=PackedStringArray("_attackAnim", "_range")]
 script = ExtResource("2_t3ly3")
