@@ -7,7 +7,12 @@ public partial class EnemyPatrol : EnemyState
     private float _patrolDirection = -1f; //Positive value: goes right, Negative value: goes left 
     public override void Enter()
     {
-       
+        if (!enemy.mapEdge.IsColliding())
+        {
+            Vector2 anchorScale = enemy.anchor.Scale;
+            anchorScale.X *= -1;
+            enemy.anchor.Scale = anchorScale;
+        }
     }
     public override void Exit()
     {

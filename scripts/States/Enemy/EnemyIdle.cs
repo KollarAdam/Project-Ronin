@@ -11,9 +11,7 @@ public partial class EnemyIdle : EnemyState
     }
     public override void Exit()
     {
-        Vector2 anchorScale = enemy.anchor.Scale;
-        anchorScale.X *= -1;
-        enemy.anchor.Scale = anchorScale;
+       
     }
     public override void Process(double delta)
     {

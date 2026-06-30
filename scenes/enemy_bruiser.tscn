@@ -190,6 +190,7 @@ shape = SubResource("RectangleShape2D_s5p7r")
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1482856094]
 script = ExtResource("15_f6bff")
+_maxMoveSpeed = 100.0
 metadata/_custom_type_script = "uid://crvc04pu0kefe"
 
 [node name="StateMachine" type="Node" parent="." unique_id=1674096187 node_paths=PackedStringArray("initialState")]
