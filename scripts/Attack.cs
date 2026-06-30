@@ -7,6 +7,7 @@ public partial class Attack : Node2D
     [Export] private Area2D _range;
     [Export] private int _damage = 1;
     [Export] private float _attackSpeed = 1f;
+    [Export] private AudioStreamPlayer2D _attackSound;
     public int Damage
     {
         get { return _damage; }
@@ -30,6 +31,8 @@ public partial class Attack : Node2D
     {
         _attackAnim.SpeedScale = atkSpeed;
         _attackAnim.Play(anim);
+        _attackSound.PitchScale = new RandomNumberGenerator().RandfRange(.9f, 1.1f);
+        _attackSound.Play();
     }
     
 }

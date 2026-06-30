@@ -6,6 +6,8 @@ public partial class Enemy1 : Entity
 {
 	[Export] private int _hp = 1;
 
+	[Export] private AudioStreamPlayer2D audio;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -20,6 +22,7 @@ public partial class Enemy1 : Entity
 	public override void TakeDamage(int dmg)
 	{
 		_hp -= dmg;
+		audio.Play();
 		GD.Print(_hp);
 	}
 

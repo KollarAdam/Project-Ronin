@@ -1,7 +1,11 @@
 [gd_scene format=3 uid="uid://dp1oiovk0cg0y"]
 
 [ext_resource type="Script" uid="uid://2kjvw0co72ax" path="res://scripts/Attack.cs" id="1_6fs0s"]
+[ext_resource type="AudioStream" uid="uid://dudclunjwcw7m" path="res://assets/SFX/swing1_beginnnig.wav" id="2_jy1op"]
 
-[node name="Attack" type="Node2D" unique_id=1469314117 node_paths=PackedStringArray("_attackAnim")]
+[node name="Attack" type="Node2D" unique_id=1469314117 node_paths=PackedStringArray("_attackSound")]
 script = ExtResource("1_6fs0s")
-_attackAnim = NodePath("")
+_attackSound = NodePath("AudioStreamPlayer2D")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=231630149]
+stream = ExtResource("2_jy1op")

@@ -8,19 +8,30 @@ public partial class Player : Entity
 	[Export] public MovementComponent movement;
 	[Export] public Attack attack;
 	[Export] private int _health = 3;
+	public static Player Instance;
 	public Node2D anchor;
 	public AnimationPlayer upperBody;
 	public AnimationPlayer lowerBody;
+	private float _currentTime = 0f;
 	public override void _Ready()
 	{
+		Instance = this;
 		anchor = GetNode<Node2D>("Anchor");
 		upperBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerUpper");
 		lowerBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerLower");
 		upperBody.Play("Idle");
 		lowerBody.Play("Idle");
 	}
-	public override void _Process(double delta)
-	{
+	public override void _Process(double delta){
+	
+		if(_currentTime > 0)
+		{
+			_currentTime -= (float)delta;
+		}
+		else
+		{
+			anchor.Modulate = Colors.White;
+		}
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -42,6 +53,8 @@ public partial class Player : Entity
 	public override void TakeDamage(int dmg)
 	{
 		_health -= dmg;
+		_currentTime = .1f;
+		anchor.Modulate = Colors.Red;
 		GD.Print($"Player got hit for {dmg} damage!\nCurrent hp: {_health}");
 	}
 

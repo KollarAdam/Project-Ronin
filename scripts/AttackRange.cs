@@ -14,7 +14,7 @@ public partial class AttackRange : Area2D
     public override void _ExitTree()
     {
         AreaEntered -= _OnAreaEntered;
-        AreaExited += _OnAreaExited;
+        AreaExited -= _OnAreaExited;
     }
 
     private void _OnAreaEntered(Area2D area)

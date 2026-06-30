@@ -20,6 +20,10 @@ public partial class EnemyIdle : EnemyState
         {
             StateChanged?.Invoke(this,"ENEMYPATROL");
         }
+        if (enemy.siteLine.HasOverlappingAreas())
+        {
+            StateChanged?.Invoke(this,"ENEMYCHASE");
+        }
     }
 
     private void _ResetIdleTimer()

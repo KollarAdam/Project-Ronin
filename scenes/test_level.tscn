@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bffeqret3bq1y" path="res://icon.svg" id="1_x4b8f"]
 [ext_resource type="PackedScene" uid="uid://dj30cont5bw4e" path="res://scenes/player.tscn" id="2_tmr53"]
 [ext_resource type="PackedScene" uid="uid://bkteq6vvcknm7" path="res://scenes/box.tscn" id="3_qcd3b"]
+[ext_resource type="PackedScene" uid="uid://dv3d1x2d08usf" path="res://scenes/enemy_bruiser.tscn" id="4_x4b8f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_aqk2v"]
 texture = ExtResource("1_x4b8f")
@@ -93,3 +94,7 @@ _hp = 10
 
 [node name="Box1" parent="." unique_id=999233999 instance=ExtResource("3_qcd3b")]
 position = Vector2(143, 25)
+
+[node name="EnemyBruiser" parent="." unique_id=1722046121 instance=ExtResource("4_x4b8f")]
+position = Vector2(189, 122)
+_health = 3
