@@ -7,6 +7,7 @@ public partial class Player : Entity
 	[Export] public InputComponent input;
 	[Export] public MovementComponent movement;
 	[Export] public Attack attack;
+	[Export] private int _health = 3;
 	public Node2D anchor;
 	public AnimationPlayer upperBody;
 	public AnimationPlayer lowerBody;
@@ -15,11 +16,11 @@ public partial class Player : Entity
 		anchor = GetNode<Node2D>("Anchor");
 		upperBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerUpper");
 		lowerBody = GetNode<AnimationPlayer>("Anchor/AnimationPlayerLower");
+		upperBody.Play("Idle");
+		lowerBody.Play("Idle");
 	}
 	public override void _Process(double delta)
 	{
-		upperBody.Play("Idle");
-		lowerBody.Play("Idle");
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -40,7 +41,8 @@ public partial class Player : Entity
 
 	public override void TakeDamage(int dmg)
 	{
-		GD.Print($"Player got hit for {dmg} damage!");
+		_health -= dmg;
+		GD.Print($"Player got hit for {dmg} damage!\nCurrent hp: {_health}");
 	}
 
 }

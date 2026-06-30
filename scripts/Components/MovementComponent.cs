@@ -3,17 +3,23 @@ using System;
 [GlobalClass]
 public partial class MovementComponent : Node
 {
+	[ExportGroup("Horizontal Movement")]
 	[Export] private float _maxMoveSpeed = 200f;
 	[Export] private float _acceleration = 10000f;
 	[Export] private float _airAcceleration = 1000f;
 	[Export] private float _friction = 10000f;
 	[Export] private float _airFriction = 700f;
+
+	[ExportGroup("Vertical Movement")]
 	[Export] private float _upGravity = 500f;
 	[Export] private float _downGravity = 1000f;
 	[Export] private float _jumpStrength = 200f;
 	[Export] private int _extraJumps = 1;
+
+	[ExportGroup("Wallhang Settings")]
 	[Export] private float _wallSlide = 20f;
 	[Export] private float _hangGracePeriod = 3f;
+
 	private float _coyoteTime = 0.1f;
 	private const float _COYOTETIMEDEFAULTVALUE = 0.1f; 
 	private const float _WALLSLIDEDEFAULTVALUE = 20f;

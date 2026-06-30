@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Label : Godot.Label
+public partial class CurrentStateLabel : Label
 {
     private StateMachine mach;
     private string label;

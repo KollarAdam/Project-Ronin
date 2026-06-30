@@ -3,48 +3,55 @@ using System;
 
 public partial class EnemyBruiser : Entity
 {
+    [Export] public MovementComponent movement;
     [Export] public Attack attack;
+    [Export] public RayCast2D mapEdge;
     [Export] private AttackRange range;
-    Godot.Label label;
-    float h = 3f;
+    public float moveDir;
+    public Node2D anchor;
+    private float _attackDelay = 0f;
+    private const float _ATTACKDELAYDEFAULTVALUE = 1f;
+    private bool _isAttacking = false;
     public override void _Ready()
     {
-        label = GetNode<Godot.Label>("Label");
-        //Velocity = RandomizeWander();
+        anchor = GetNode<Node2D>("Anchor");
         range.PlayerInRange += OnPLayerInRange;
+        range.PlayerOutOfRange += OnPLayerOutOfRange;
     }
     public override void _Process(double delta)
     {
-        base._Process(delta);
+        if(_attackDelay < 0 && _isAttacking)
+        {
+            attack._ApplyAttack("Bruiser_Attack");
+            _attackDelay = _ATTACKDELAYDEFAULTVALUE;
+        }
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        // h -= (float)delta;
-        // if (h < 0)
-        // {
-        //     Velocity += RandomizeWander();
-        //     h = 3f;
-        // }
+        _attackDelay -= (float)delta;
+        var velocity = Velocity;
+        velocity.Y = movement.ApplyGravity(velocity.Y, delta, IsOnFloor());
+        moveDir = Velocity.X;
+        Velocity = velocity;
         MoveAndSlide();
     }
     public override void _ExitTree()
     {
         range.PlayerInRange -= OnPLayerInRange;
+        range.PlayerOutOfRange -= OnPLayerOutOfRange;
     }
 
     public override void TakeDamage(int dmg)
     {
-        label.Text = $"I'm John Goon and I took {dmg} damage";
         GD.Print($"I'm John Goon and I took {dmg} damage");
-    }
-
-    private Vector2 RandomizeWander()
-    {
-        return new Vector2(new RandomNumberGenerator().RandfRange(-10, 10) * 10, 0);
     }
     private void OnPLayerInRange()
     {
-        attack._ApplyAttack("Bruiser_Attack");
+        _isAttacking = true;
+    }
+    private void OnPLayerOutOfRange()
+    {
+        _isAttacking = false;
     }
 }

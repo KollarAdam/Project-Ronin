@@ -1,6 +1,6 @@
 using Godot;
 using System;
 
-public partial class EnemyDie : GenericState
+public partial class EnemyDie : EnemyState
 {
 }

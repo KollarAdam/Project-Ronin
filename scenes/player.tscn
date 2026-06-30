@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://b76pv6rh2ipvh" path="res://scripts/States/Player/PlayerJump.cs" id="10_y4r1p"]
 [ext_resource type="Script" uid="uid://cnsfcf6pg1aac" path="res://scripts/States/Player/PlayerFall.cs" id="11_d2wvv"]
 [ext_resource type="Script" uid="uid://brgratahelepx" path="res://scripts/States/Player/PlayerDoubleJump.cs" id="12_3v2ag"]
-[ext_resource type="Script" uid="uid://bmeb2o0fke8kk" path="res://scripts/Label.cs" id="13_jej6c"]
+[ext_resource type="Script" uid="uid://bmeb2o0fke8kk" path="res://scripts/CurrentStateLabel.cs" id="13_jej6c"]
 [ext_resource type="Script" uid="uid://db8x5uymgk2hw" path="res://scripts/Hurtbox.cs" id="14_f1ej7"]
 
 [sub_resource type="Animation" id="Animation_fjrip"]
@@ -357,7 +357,7 @@ drag_vertical_enabled = true
 drag_horizontal_offset = 1.0
 drag_vertical_offset = -1.0
 
-[node name="Label" type="Label" parent="." unique_id=1417109159]
+[node name="CurrentState" type="Label" parent="." unique_id=1417109159]
 offset_left = -19.0
 offset_top = -42.0
 offset_right = 21.0
