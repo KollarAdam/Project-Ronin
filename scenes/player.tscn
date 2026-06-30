@@ -231,6 +231,7 @@ size = Vector2(12, 39.5)
 font_size = 6
 
 [node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("input", "movement", "attack")]
+collision_layer = 2
 script = ExtResource("1_4flbx")
 input = NodePath("InputComponent")
 movement = NodePath("MovementComponent")
@@ -273,7 +274,8 @@ texture = ExtResource("4_a8ls1")
 hframes = 4
 
 [node name="Hitbox" type="Area2D" parent="Anchor/Attack/Sprite2D" unique_id=1623004646 node_paths=PackedStringArray("_attackDamage")]
-monitoring = false
+collision_layer = 16
+collision_mask = 0
 script = ExtResource("5_qfm1y")
 _attackDamage = NodePath("../..")
 metadata/_custom_type_script = "uid://cbkwrxx4gb2m4"
@@ -292,6 +294,8 @@ position = Vector2(-1, 0.25)
 shape = SubResource("RectangleShape2D_onrkg")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=525412187 node_paths=PackedStringArray("_entity")]
+collision_layer = 8
+collision_mask = 8
 script = ExtResource("14_f1ej7")
 _entity = NodePath("..")
 metadata/_custom_type_script = "uid://db8x5uymgk2hw"
@@ -345,6 +349,7 @@ script = ExtResource("12_3v2ag")
 metadata/_custom_type_script = "uid://bdxq81t10fk3b"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=346404235]
+process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_horizontal_enabled = true

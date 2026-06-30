@@ -36,6 +36,7 @@ public partial class EnemyBruiser : Entity
     public override void TakeDamage(int dmg)
     {
         label.Text = $"I'm John Goon and I took {dmg} damage";
+        GD.Print($"I'm John Goon and I took {dmg} damage");
     }
 
     private Vector2 RandomizeWander()

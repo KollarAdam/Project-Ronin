@@ -111,6 +111,7 @@ size = Vector2(16, 44)
 font_size = 8
 
 [node name="EnemyBruiser" type="CharacterBody2D" unique_id=1722046121 node_paths=PackedStringArray("attack", "range")]
+collision_layer = 4
 script = ExtResource("1_68cc7")
 attack = NodePath("Anchor/Attack")
 range = NodePath("Anchor/AttackRange")
@@ -125,6 +126,8 @@ _range = NodePath("../AttackRange")
 metadata/_custom_type_script = "uid://2kjvw0co72ax"
 
 [node name="Hitbox" type="Area2D" parent="Anchor/Attack" unique_id=552608650 node_paths=PackedStringArray("_attackDamage")]
+collision_layer = 8
+collision_mask = 0
 script = ExtResource("3_s5p7r")
 _attackDamage = NodePath("..")
 metadata/_custom_type_script = "uid://cbkwrxx4gb2m4"
@@ -147,6 +150,8 @@ libraries/ = SubResource("AnimationLibrary_fvhgg")
 
 [node name="AttackRange" type="Area2D" parent="Anchor" unique_id=712373738]
 position = Vector2(-1, 0)
+collision_layer = 0
+collision_mask = 8
 script = ExtResource("5_cysno")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Anchor/AttackRange" unique_id=513143912]
@@ -165,6 +170,8 @@ position = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_s5p7r")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1482649549 node_paths=PackedStringArray("_entity")]
+collision_layer = 0
+collision_mask = 16
 script = ExtResource("4_6krak")
 _entity = NodePath("..")
 metadata/_custom_type_script = "uid://db8x5uymgk2hw"
