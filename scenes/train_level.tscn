@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bffeqret3bq1y" path="res://icon.svg" id="1_jym37"]
 [ext_resource type="PackedScene" uid="uid://dj30cont5bw4e" path="res://scenes/player.tscn" id="2_ejvq3"]
 [ext_resource type="PackedScene" uid="uid://dv3d1x2d08usf" path="res://scenes/enemy_bruiser.tscn" id="3_ejvq3"]
+[ext_resource type="AudioStream" uid="uid://c483sb3wawpyx" path="res://assets/music/train_level_track.mp3" id="4_ijcjr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ijcjr"]
 texture = ExtResource("1_jym37")
@@ -123,3 +124,9 @@ position = Vector2(2324, -7)
 
 [node name="EnemyBruiser13" parent="." unique_id=1472942019 instance=ExtResource("3_ejvq3")]
 position = Vector2(2611, 57)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1795955825]
+stream = ExtResource("4_ijcjr")
+volume_db = -12.0
+autoplay = true
+parameters/looping = true

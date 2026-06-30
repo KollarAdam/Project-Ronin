@@ -349,6 +349,7 @@ script = ExtResource("12_3v2ag")
 metadata/_custom_type_script = "uid://bdxq81t10fk3b"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=346404235]
+zoom = Vector2(0.65, 0.65)
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
