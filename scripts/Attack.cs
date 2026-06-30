@@ -3,41 +3,21 @@ using System;
 [GlobalClass]
 public partial class Attack : Node2D
 {
-    [Export] private Entity _entity;
     [Export] private AnimationPlayer _attackAnim;
+    [Export] private Area2D _range;
     [Export] private int _damage = 1;
     [Export] private float _attackSpeed = 1f;
-    private Player _player;
     public int Damage
     {
         get { return _damage; }
     }
-    public override void _Ready()
+    public void _AttackDir(bool upInput, bool downInput, bool isOnFloor)
     {
-        if (_entity is Player)
-        {
-            _player = (Player)_entity;
-        }
-    }
-    public override void _Process(double delta)
-    {
-        if (_player != null)
-        {
-            _attackAnim.SpeedScale = _attackSpeed;
-            _AttackDir();
-            if (_player.input.Attack)
-            {
-                _attackAnim.Play("Attack");
-            }
-        }
-    }
-    private void _AttackDir()
-    {
-        if (_player.input.Up)
+        if (upInput)
         {
             RotationDegrees = -90f;
         }
-        else if (_player.input.Down && !_player.IsOnFloor())
+        else if (downInput && !isOnFloor)
         {
             RotationDegrees = 90f;
         }
@@ -46,4 +26,10 @@ public partial class Attack : Node2D
             RotationDegrees = 0f;
         }
     }
+    public void _ApplyAttack(string anim, float atkSpeed = 1f)
+    {
+        _attackAnim.SpeedScale = atkSpeed;
+        _attackAnim.Play(anim);
+    }
+    
 }

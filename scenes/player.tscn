@@ -230,10 +230,11 @@ size = Vector2(12, 39.5)
 [sub_resource type="LabelSettings" id="LabelSettings_a8ls1"]
 font_size = 6
 
-[node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("input", "movement")]
+[node name="Player" type="CharacterBody2D" unique_id=68965221 node_paths=PackedStringArray("input", "movement", "attack")]
 script = ExtResource("1_4flbx")
 input = NodePath("InputComponent")
 movement = NodePath("MovementComponent")
+attack = NodePath("Anchor/Attack")
 
 [node name="Anchor" type="Node2D" parent="." unique_id=1381458752]
 
@@ -261,10 +262,9 @@ libraries/ = SubResource("AnimationLibrary_fjrip")
 root_node = NodePath("../..")
 libraries/ = SubResource("AnimationLibrary_y4r1p")
 
-[node name="Attack" parent="Anchor" unique_id=1469314117 node_paths=PackedStringArray("_entity", "_attackAnim") instance=ExtResource("3_qlg0r")]
+[node name="Attack" parent="Anchor" unique_id=1469314117 node_paths=PackedStringArray("_attackAnim") instance=ExtResource("3_qlg0r")]
 visible = false
 position = Vector2(5, 0)
-_entity = NodePath("../..")
 _attackAnim = NodePath("AnimationPlayerAttack")
 
 [node name="Sprite2D" type="Sprite2D" parent="Anchor/Attack" unique_id=151356812]

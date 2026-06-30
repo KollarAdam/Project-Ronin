@@ -6,6 +6,7 @@ public partial class Player : Entity
 	[ExportGroup("Components")]
 	[Export] public InputComponent input;
 	[Export] public MovementComponent movement;
+	[Export] public Attack attack;
 	public Node2D anchor;
 	public AnimationPlayer upperBody;
 	public AnimationPlayer lowerBody;
@@ -28,6 +29,11 @@ public partial class Player : Entity
 		{
 			anchorScale.X = Math.Sign(input.Direction);
 			anchor.Scale = anchorScale;
+		}
+		attack._AttackDir(input.Up, input.Down, IsOnFloor());
+		if (input.Attack)
+		{
+			attack._ApplyAttack("Attack");
 		}
 		MoveAndSlide();
 	}

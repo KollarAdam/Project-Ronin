@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cbkwrxx4gb2m4" path="res://scripts/Hitbox.cs" id="3_s5p7r"]
 [ext_resource type="Script" uid="uid://db8x5uymgk2hw" path="res://scripts/Hurtbox.cs" id="4_6krak"]
 [ext_resource type="Texture2D" uid="uid://oqlmcge7v1xb" path="res://assets/AttackSwing.png" id="4_s5p7r"]
+[ext_resource type="Script" uid="uid://bo0u5ctlvm5dm" path="res://scripts/AttackRange.cs" id="5_cysno"]
 [ext_resource type="Script" uid="uid://bikqoxvuev3b3" path="res://scripts/States/StateMachine.cs" id="5_hu41j"]
 [ext_resource type="Texture2D" uid="uid://dd4qgngmiwdct" path="res://assets/Enemies/Bruiser.png" id="5_t3ly3"]
 [ext_resource type="Script" uid="uid://dh5lronacuglg" path="res://scripts/States/Enemy/EnemyPatrol.cs" id="8_6krak"]
@@ -14,15 +15,12 @@
 [ext_resource type="Script" uid="uid://cgywg6w5nc121" path="res://scripts/States/Enemy/EnemyHurt.cs" id="12_cysno"]
 [ext_resource type="Script" uid="uid://cwq637151nk3u" path="res://scripts/States/Enemy/EnemyDie.cs" id="13_f6bff"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s5p7r"]
-size = Vector2(16, 44)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6krak"]
 size = Vector2(24, 38)
 
 [sub_resource type="Animation" id="Animation_hu41j"]
 resource_name = "Bruiser_Attack"
-length = 0.3
+length = 0.5
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -31,7 +29,7 @@ tracks/0/path = NodePath("AttackSprite:frame_coords")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
+"times": PackedFloat32Array(0.2, 0.3, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)]
@@ -43,7 +41,7 @@ tracks/1/path = NodePath("AttackSprite:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
+"times": PackedFloat32Array(0.2, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -55,7 +53,7 @@ tracks/2/path = NodePath("Hitbox/CollisionShape2D:disabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.012500003, 0.3),
+"times": PackedFloat32Array(0.2, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
@@ -106,34 +104,37 @@ _data = {
 &"RESET": SubResource("Animation_u3e2a")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s5p7r"]
+size = Vector2(16, 44)
+
 [sub_resource type="LabelSettings" id="LabelSettings_68cc7"]
 font_size = 8
 
-[node name="EnemyBruiser" type="CharacterBody2D" unique_id=1722046121]
+[node name="EnemyBruiser" type="CharacterBody2D" unique_id=1722046121 node_paths=PackedStringArray("attack", "range")]
 script = ExtResource("1_68cc7")
+attack = NodePath("Anchor/Attack")
+range = NodePath("Anchor/AttackRange")
 metadata/_custom_type_script = "uid://b1jj7jhh8gxpk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=191989515]
-position = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_s5p7r")
+[node name="Anchor" type="Node2D" parent="." unique_id=1403579909]
 
-[node name="Attack" type="Node2D" parent="." unique_id=1628147498 node_paths=PackedStringArray("_entity", "_attackAnim")]
+[node name="Attack" type="Node2D" parent="Anchor" unique_id=1628147498 node_paths=PackedStringArray("_attackAnim", "_range")]
 script = ExtResource("2_t3ly3")
-_entity = NodePath("..")
 _attackAnim = NodePath("AttackAnimations")
+_range = NodePath("../AttackRange")
 metadata/_custom_type_script = "uid://2kjvw0co72ax"
 
-[node name="Hitbox" type="Area2D" parent="Attack" unique_id=552608650 node_paths=PackedStringArray("_attackDamage")]
+[node name="Hitbox" type="Area2D" parent="Anchor/Attack" unique_id=552608650 node_paths=PackedStringArray("_attackDamage")]
 script = ExtResource("3_s5p7r")
 _attackDamage = NodePath("..")
 metadata/_custom_type_script = "uid://cbkwrxx4gb2m4"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack/Hitbox" unique_id=1381639336]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Anchor/Attack/Hitbox" unique_id=1381639336]
 position = Vector2(-19, 0)
 shape = SubResource("RectangleShape2D_6krak")
 disabled = true
 
-[node name="AttackSprite" type="Sprite2D" parent="Attack" unique_id=1261133908]
+[node name="AttackSprite" type="Sprite2D" parent="Anchor/Attack" unique_id=1261133908]
 visible = false
 position = Vector2(-9, -4)
 texture = ExtResource("4_s5p7r")
@@ -141,22 +142,36 @@ flip_h = true
 hframes = 4
 frame = 1
 
-[node name="AttackAnimations" type="AnimationPlayer" parent="Attack" unique_id=1224249417]
+[node name="AttackAnimations" type="AnimationPlayer" parent="Anchor/Attack" unique_id=1224249417]
 libraries/ = SubResource("AnimationLibrary_fvhgg")
+
+[node name="AttackRange" type="Area2D" parent="Anchor" unique_id=712373738]
+position = Vector2(-1, 0)
+script = ExtResource("5_cysno")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Anchor/AttackRange" unique_id=513143912]
+position = Vector2(-19, 0)
+shape = SubResource("RectangleShape2D_6krak")
+debug_color = Color(0.60526025, 0.5346035, 0.24802065, 0.41960785)
+
+[node name="BruiserSprite" type="Sprite2D" parent="Anchor" unique_id=185545000]
+texture = ExtResource("5_t3ly3")
+
+[node name="BruiserAnimations" type="AnimationPlayer" parent="Anchor" unique_id=671025170]
+root_node = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=191989515]
+position = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_s5p7r")
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1482649549 node_paths=PackedStringArray("_entity")]
 script = ExtResource("4_6krak")
 _entity = NodePath("..")
 metadata/_custom_type_script = "uid://db8x5uymgk2hw"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=437905474]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox" unique_id=437905474]
 position = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_s5p7r")
-
-[node name="BruiserSprite" type="Sprite2D" parent="." unique_id=185545000]
-texture = ExtResource("5_t3ly3")
-
-[node name="BruiserAnimations" type="AnimationPlayer" parent="." unique_id=671025170]
 
 [node name="StateMachine" type="Node" parent="." unique_id=1674096187]
 script = ExtResource("5_hu41j")
