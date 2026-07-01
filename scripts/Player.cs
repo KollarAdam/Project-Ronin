@@ -32,6 +32,7 @@ public partial class Player : Entity
 		{
 			anchor.Modulate = Colors.White;
 		}
+		if(_health <= 0) Die();
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -55,7 +56,10 @@ public partial class Player : Entity
 		_health -= dmg;
 		_currentTime = .1f;
 		anchor.Modulate = Colors.Red;
-		GD.Print($"Player got hit for {dmg} damage!\nCurrent hp: {_health}");
+		// GD.Print($"Player got hit for {dmg} damage!\nCurrent hp: {_health}");
 	}
-
+	private void Die()
+	{
+		GetTree().ReloadCurrentScene();
+	}
 }

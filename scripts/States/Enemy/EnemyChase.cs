@@ -16,7 +16,7 @@ public partial class EnemyChase : EnemyState
         _moveDir = Math.Clamp(player.GlobalPosition.X - enemy.GlobalPosition.X, -1, 1);
         if (enemy.siteLine.HasOverlappingAreas())
         {
-            velocity.X = enemy.movement.AccelerateHorizontally(_moveDir, velocity.X, delta, enemy.IsOnFloor());
+            velocity.X = enemy.movement.AccelerateHorizontally(_moveDir*1.4f, velocity.X, delta, enemy.IsOnFloor());
             enemy.Velocity = velocity;
         }
         else

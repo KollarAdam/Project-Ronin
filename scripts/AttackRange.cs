@@ -22,7 +22,7 @@ public partial class AttackRange : Area2D
         Hurtbox hurtbox = area as Hurtbox;
         if (hurtbox is Hurtbox)
         {
-            GD.Print("Player entered attack range");
+            // GD.Print("Player entered attack range");
             PlayerInRange?.Invoke();
         }
     }
@@ -31,7 +31,7 @@ public partial class AttackRange : Area2D
         Hurtbox hurtbox = area as Hurtbox;
         if (hurtbox is Hurtbox)
         {
-            GD.Print("Player exited attack range");
+            // GD.Print("Player exited attack range");
             PlayerOutOfRange?.Invoke();
         }
     }

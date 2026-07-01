@@ -72,7 +72,7 @@ public partial class EnemyBruiser : Entity
 		_currentTime = .1f;
 		anchor.Modulate = Colors.Red;
         if (_health <= 0) Death();
-        GD.Print($"I'm John Goon and I took {dmg} damage");
+        // GD.Print($"I'm John Goon and I took {dmg} damage");
     }
     private void Death()
     {

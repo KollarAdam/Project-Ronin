@@ -359,6 +359,7 @@ drag_horizontal_offset = 1.0
 drag_vertical_offset = -1.0
 
 [node name="CurrentState" type="Label" parent="." unique_id=1417109159]
+visible = false
 offset_left = -19.0
 offset_top = -42.0
 offset_right = 21.0

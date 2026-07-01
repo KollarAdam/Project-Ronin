@@ -23,7 +23,7 @@ public partial class Enemy1 : Entity
 	{
 		_hp -= dmg;
 		audio.Play();
-		GD.Print(_hp);
+		// GD.Print(_hp);
 	}
 
 	private void _DestroyObject()

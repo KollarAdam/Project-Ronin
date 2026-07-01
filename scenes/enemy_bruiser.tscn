@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://dv3d1x2d08usf"]
 
-[ext_resource type="Script" path="res://scripts/EnemyBruiser.cs" id="1_68cc7"]
+[ext_resource type="Script" uid="uid://b4fi5nadn6llh" path="res://scripts/EnemyBruiser.cs" id="1_68cc7"]
 [ext_resource type="PackedScene" uid="uid://dp1oiovk0cg0y" path="res://scenes/attack.tscn" id="2_65qu6"]
 [ext_resource type="Script" uid="uid://cbkwrxx4gb2m4" path="res://scripts/Hitbox.cs" id="3_s5p7r"]
 [ext_resource type="Script" uid="uid://db8x5uymgk2hw" path="res://scripts/Hurtbox.cs" id="4_6krak"]
 [ext_resource type="Texture2D" uid="uid://oqlmcge7v1xb" path="res://assets/AttackSwing.png" id="4_s5p7r"]
-[ext_resource type="Script" path="res://scripts/AttackRange.cs" id="5_cysno"]
+[ext_resource type="Script" uid="uid://bo0u5ctlvm5dm" path="res://scripts/AttackRange.cs" id="5_cysno"]
 [ext_resource type="Script" uid="uid://bikqoxvuev3b3" path="res://scripts/States/StateMachine.cs" id="5_hu41j"]
 [ext_resource type="Texture2D" uid="uid://dd4qgngmiwdct" path="res://assets/Enemies/Bruiser.png" id="5_t3ly3"]
 [ext_resource type="Script" uid="uid://dh5lronacuglg" path="res://scripts/States/Enemy/EnemyPatrol.cs" id="8_6krak"]
@@ -118,6 +118,7 @@ font_size = 8
 [node name="EnemyBruiser" type="CharacterBody2D" unique_id=1722046121 node_paths=PackedStringArray("movement", "attack", "siteLine", "_range")]
 collision_layer = 4
 script = ExtResource("1_68cc7")
+_health = 2
 movement = NodePath("MovementComponent")
 attack = NodePath("Anchor/Attack")
 siteLine = NodePath("Anchor/Area2D")
@@ -235,6 +236,7 @@ script = ExtResource("13_f6bff")
 metadata/_custom_type_script = "uid://hgrub042rbm3"
 
 [node name="CurrentState" type="Label" parent="." unique_id=1918568257]
+visible = false
 offset_left = -108.0
 offset_top = -44.0
 offset_right = 108.0
