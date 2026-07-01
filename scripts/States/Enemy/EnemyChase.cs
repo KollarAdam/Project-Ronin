@@ -21,6 +21,7 @@ public partial class EnemyChase : EnemyState
         }
         else
         {
+            TurnAround?.Invoke();
             enemy.Velocity = Vector2.Zero;
             StateChanged?.Invoke(this, "ENEMYIDLE");
         }

@@ -20,6 +20,7 @@ public partial class EnemyBruiser : Entity
     private bool _isAttacking = false;
     public override void _Ready()
     {
+        EnemyState.TurnAround += OnPlayerTurn;
         anchor = GetNode<Node2D>("Anchor");
         mapEdge = GetNode<RayCast2D>("Anchor/CheckMapEdge");
         wallCollision = GetNode<RayCast2D>("Anchor/CheckWall");
@@ -62,6 +63,7 @@ public partial class EnemyBruiser : Entity
     {
         _range.PlayerInRange -= OnPLayerInRange;
         _range.PlayerOutOfRange -= OnPLayerOutOfRange;
+        EnemyState.TurnAround -= OnPlayerTurn;
     }
 
     public override void TakeDamage(int dmg)
@@ -83,5 +85,11 @@ public partial class EnemyBruiser : Entity
     private void OnPLayerOutOfRange()
     {
         _isAttacking = false;
+    }
+    private void OnPlayerTurn()
+    {
+        Vector2 anchorScale = anchor.Scale;
+        anchorScale.X *= -1;
+        anchor.Scale = anchorScale;
     }
 }

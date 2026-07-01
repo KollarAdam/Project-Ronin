@@ -99,6 +99,8 @@ position = Vector2(1516, 121)
 
 [node name="EnemyBruiser2" parent="." unique_id=647426154 instance=ExtResource("3_ejvq3")]
 position = Vector2(295, -23)
+canPatrol = false
+isFlipped = true
 
 [node name="EnemyBruiser3" parent="." unique_id=1752643121 instance=ExtResource("3_ejvq3")]
 position = Vector2(455, -23)
