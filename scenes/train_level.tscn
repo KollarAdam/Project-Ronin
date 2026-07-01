@@ -84,6 +84,7 @@ sources/0 = SubResource("TileSetAtlasSource_ijcjr")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1795955825]
 stream = ExtResource("4_ijcjr")
 volume_db = -16.0
+autoplay = true
 parameters/looping = true
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1600769136]
@@ -91,7 +92,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAAADAAIAAAABAAAAAAADAAIAAAATAAAAAAADAAI
 tile_set = SubResource("TileSet_e4diw")
 
 [node name="Player" parent="." unique_id=68965221 instance=ExtResource("2_ejvq3")]
-position = Vector2(2602, -42)
+position = Vector2(85, -104)
 
 [node name="EnemyBruiser" parent="." unique_id=1722046121 instance=ExtResource("3_ejvq3")]
 position = Vector2(1516, 121)
